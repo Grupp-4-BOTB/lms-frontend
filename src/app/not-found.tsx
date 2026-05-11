@@ -2,11 +2,9 @@ import Link from "next/link";
 
 export default function NotFound() {
   return (
-    // bg-[#1a202c] matchar den mörkblå/grå färgen på din bild
+    // bg-[#1a202c] matchar den mörkblå/grå färgen på bilden
     <div className="min-h-screen bg-[#1a202c] flex flex-col items-center justify-center text-center px-4">
       <div className="max-w-xl w-full">
-        {/* Liten text längst upp */}
-
         {/* Illustrationen/Grafiken */}
         <div className="relative mb-8">
           <img
