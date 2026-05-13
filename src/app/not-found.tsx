@@ -1,10 +1,16 @@
+"use client";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import Button from "@/components/ui/Button";
+
 
 export default function NotFound() {
+  const router = useRouter();
+
   return (
     // bg-[#1a202c] matchar den mörkblå/grå färgen på bilden
-    <div className="min-h-screen bg-[#1a202c] flex flex-col items-center justify-center text-center px-4">
-      <div className="max-w-xl w-full">
+      <div className="flex-1 min-h-screen bg-[var(--primary-color)] flex flex-col items-center justify-center text-center p-8">
+        
         {/* Illustrationen/Grafiken */}
         <div className="relative mb-8">
           <img
@@ -23,13 +29,9 @@ export default function NotFound() {
         </p>
 
         {/* Orange knapp */}
-        <Link
-          href="/"
-          className="inline-block bg-[#ff5a3d] hover:bg-[#e54e35] text-white font-medium py-3 px-8 rounded-md transition-all duration-200"
-        >
-          Back to Home ↗
-        </Link>
+      <Button onClick={() => router.push("/home")}>
+        Back to Home
+      </Button>
       </div>
-    </div>
   );
 }
