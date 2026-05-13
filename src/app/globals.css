@@ -1,8 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Archivo:ital,wght@0,100..900;1,100..900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background-color: #f7f8f9;
+  --foreground-color: #fff;
+  --primary-color: #2C3545;
+  --accent-color: #ED5735;
+  --opacity-accent-color: rgba(237, 87, 53, 0.1);
+  --black-color: #000000;
+  --white-color: #fff;
+  
+  
+  --mid-dark-gray-color: rgba(44, 53, 69, 0.1);
+  --green-color: #03B700;
+  --opacity-green-color: rgba(3, 183, 0, 0.1);
+  --blue-color: #007BFF;
+  --opacity-blue-color: rgba(0, 123, 255, 0.1);
+  --darkblue-color: #2C3545;
+  --opacity-darkblue-color: rgba(44, 53, 69, 0.1);
+  
+  
+  /* text colors */
+  
+  --header-text-color: var(--primary-color);
+  --body-text-color: #AAA;
+
+
+  /* typography */
+  --font-standard: 'Archivo', sans-serif;
+
 }
 
 @theme inline {
