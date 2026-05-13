@@ -21,7 +21,7 @@ export default function ProfileForm() {
     }
 
     return (
-        <div className="flex flex-col gap-4 p-6 bg-white rounded-xl w-[1000px] h-[830px]">
+        <div className="flex flex-col gap-4 p-6 m-3 bg-white rounded-xl w-[1000px] h-[830px]">
             <div className="flex items-center gap-8">
                 <div className="w-16 h-16 rounded-xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
                     {photo ? (<img src={photo} alt="" className="w-full h-full object-cover" />) : <img src="/profile3-icon.svg" alt="Placeholder" className="text-gray-400 text-xs" />}
