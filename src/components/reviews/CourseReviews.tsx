@@ -49,9 +49,7 @@ export default function CourseReviews({courseId, studentId,}:CourseReviewProps){
         <section className="">
 
             <div className="">
-                <AvarageRatingCard avarageRating={summary.avarageRating}
-                totalReviews={summary.totalReviews}
-                />
+                <AvarageRatingCard avarageRating={summary.avarageRating} totalReviews={summary.totalReviews}/>
                 
                 <DetailedRating rating={summary.ratings}/>
 
