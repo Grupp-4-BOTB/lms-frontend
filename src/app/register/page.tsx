@@ -2,6 +2,7 @@
 
 import React from "react";
 import Button from "@/components/ui/Button";
+import Link from "next/link";
 
 export default function RegisterPage() {
   return (
@@ -80,9 +81,11 @@ export default function RegisterPage() {
             </span>
           </div>
           <div className="w-full pt-4">
+            <Link href="/verification">
             <Button variant="orange" size="lg">
               Complete
             </Button>
+            </Link>
           </div>
         </form>
       </div>
