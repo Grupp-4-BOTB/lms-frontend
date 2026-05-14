@@ -20,7 +20,6 @@
   
   /* Text colors */
   --header-text-color: var(--primary-color);
-  --body-text-color: #aaaaaa;
 }
 
 body {

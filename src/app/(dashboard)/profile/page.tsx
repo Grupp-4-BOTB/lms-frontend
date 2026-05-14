@@ -1,10 +1,16 @@
-import ProfileForm from "@/components/ProfileForm";
+import ProfileForm from "@/components/profile/ProfileForm";
+import ProfileBio from "@/components/profile/ProfileBio";
+import ProfileCard from "@/components/profile/ProfileCard";
 
 export default function ProfilePage() {
     return (
-        <div className="flex items-center justify-center min-h-[50vh]">
+        <div className="flex flex-col items-center justify-center min-h-[50vh]">
             <p>profile page</p>
-            <ProfileForm />
+            <div className="flex gap-4">
+                
+                <ProfileBio />
+                <ProfileForm />
+            </div>
         </div>
     );
 }
