@@ -6,6 +6,7 @@
   --foreground-color: #ffffff;
   --primary-color: #2c3545;
   --accent-color: #ed5735;
+  --hover-accent-color:#fb923c;
   --opacity-accent-color: rgba(237, 87, 53, 0.1);
   --black-color: #000000;
   --white-color: #ffffff;
@@ -17,12 +18,10 @@
   --opacity-blue-color: rgba(0, 123, 255, 0.1);
   --darkblue-color: #2c3545;
   --opacity-darkblue-color: rgba(44, 53, 69, 0.1);
-  
-  /* Text colors */
-  --header-text-color: var(--primary-color);
 }
 
 body {
+  font-family: 'Archivo', sans-serif;
   background-color: var(--background-color);
   color: var(--primary-color); /* Sätter en mörk standardfärg på texten istället för vit/osynlig */
   padding: 0;
