@@ -14,7 +14,7 @@ export default function ProfileCard() {
         }
     }
     return (
-        <div className="flex flex-col justify-center items-center mb-2 relative">
+        <div className="flex flex-col justify-center items-center mb-2 relative ">
             <div>
                 <img className="w-full  rounded-xl" src="/profile-banner.svg" alt="" />
             </div>
@@ -26,7 +26,7 @@ export default function ProfileCard() {
                 <img src="/profile3-icon.svg" alt="Placeholder" className="w-full h-full" />
                 )}
             </div>
-            <button className="absolute bottom-0 right-0 w-7 h-7 bg-accent rounded-full flex items-center justify-center" onClick={() => fileInputRef.current?.click()}>
+            <button className="absolute bottom-0 right-0 w-7 h-7 bg-accent rounded-full flex items-center justify-center cursor-pointer" onClick={() => fileInputRef.current?.click()}>
                 <img src="/profilepic-edit-icon.svg" alt="" className="w-16 h-16" />
             </button>
             <input ref={fileInputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhotoChange} />

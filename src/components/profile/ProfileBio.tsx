@@ -8,15 +8,22 @@ export default function ProfileBio() {
     const [description, setDescription] = useState("");
 
     return (
-        <div className="flex flex-col gap-4 p-2 m-3 bg-white rounded-3xl w-[400px] h-[750px]">
+        <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] h-[940px] justify-start items-center">
             <ProfileCard />
             <Skills />
-            <p className="text-primary text-lg font-bold">Achievements</p>
-            <p className="text-primary text-lg font-bold">Bio</p>
-            <textarea name="description" id="description" 
-            value={description} 
-            onChange={(e) => setDescription(e.target.value)}
-            className="w-full border bg-background border border-background rounded-lg px-3 py-2 text-sm outline-none focus:border-orange-500 resize-none h-[150px]"></textarea>
+            
+            <div className="w-full">
+                <p className="text-primary text-lg font-bold px-2">Achievements</p>
+            </div>
+            
+            <div className="py-2">
+                <p className="text-primary text-lg font-bold px-3 mb-2">Bio</p>
+                <textarea name="description" id="description" 
+                value={description} 
+                onChange={(e) => setDescription(e.target.value)}
+                className="border bg-[var(--background-color)] border border-background rounded-lg p-4 text-sm text-[var(--body-text-color)] outline-none focus:border-orange-500 resize-none h-[250px] w-[380px]"></textarea>
+            </div>
+
         </div>
     );
 }
