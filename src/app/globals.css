@@ -3,51 +3,30 @@
 
 :root {
   --background-color: #f7f8f9;
-  --foreground-color: #fff;
-  --primary-color: #2C3545;
-  --accent-color: #ED5735;
+  --foreground-color: #ffffff;
+  --primary-color: #2c3545;
+  --accent-color: #ed5735;
   --opacity-accent-color: rgba(237, 87, 53, 0.1);
   --black-color: #000000;
-  --white-color: #fff;
-  
+  --white-color: #ffffff;
   
   --mid-dark-gray-color: rgba(44, 53, 69, 0.1);
-  --green-color: #03B700;
+  --green-color: #03b700;
   --opacity-green-color: rgba(3, 183, 0, 0.1);
-  --blue-color: #007BFF;
+  --blue-color: #007bff;
   --opacity-blue-color: rgba(0, 123, 255, 0.1);
-  --darkblue-color: #2C3545;
+  --darkblue-color: #2c3545;
   --opacity-darkblue-color: rgba(44, 53, 69, 0.1);
   
-  
-  /* text colors */
-  
+  /* Text colors */
   --header-text-color: var(--primary-color);
-  --body-text-color: #AAA;
-
-
-  /* typography */
-  --font-standard: 'Archivo', sans-serif;
-
-}
-
-@theme inline {
-  --color-background: var(--background-color);
-  --color-foreground: var(--foreground);
-  --color-primary: var(--primary-color);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background-color: var(--background-color);
+  color: var(--primary-color); /* Sätter en mörk standardfärg på texten istället för vit/osynlig */
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  min-height: 100vh;
 }
