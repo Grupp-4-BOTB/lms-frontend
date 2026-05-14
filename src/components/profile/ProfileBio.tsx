@@ -21,7 +21,7 @@ export default function ProfileBio() {
                 <textarea name="description" id="description" 
                 value={description} 
                 onChange={(e) => setDescription(e.target.value)}
-                className="border bg-[var(--background-color)] border border-background rounded-lg p-4 text-sm text-[var(--body-text-color)] outline-none focus:border-orange-500 resize-none h-[250px] w-[380px]"></textarea>
+                className="bg-[var(--background-color)]  rounded-lg p-4 text-sm text-[#AAA] outline-none focus:border-orange-500 resize-none h-[250px] w-[380px]"></textarea>
             </div>
 
         </div>
