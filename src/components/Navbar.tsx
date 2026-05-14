@@ -5,7 +5,7 @@ export default function Navbar() {
   return (
     <>
 
-  <aside className="sticky top-5 ml-5 my-5 w-64 flex flex-col gap-5 shrink-0">
+  <aside className="fixed top-5 left-5 bottom-5 w-64 flex flex-col gap-5 shrink-0 z-50">
 
 
   {/* 1. VÄNSTER NAVBAR, SHIKO LOGGA */}
