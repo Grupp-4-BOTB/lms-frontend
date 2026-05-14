@@ -23,7 +23,7 @@ export default function CourseReviews({courseId, studentId,}:CourseReviewProps){
 
     const [summary, setSummary] = useState<RatingSummary | null > (null);
 
-    // fetch review summary for a specific course from backend API
+    // fetch review summary based on courseId from backend API
     const fetchSummary = async () => {
 
         const response = await fetch(`https://localhost:7000/api/courses/${courseId}/reviews/summary`);
@@ -49,9 +49,7 @@ export default function CourseReviews({courseId, studentId,}:CourseReviewProps){
         <section className="">
 
             <div className="">
-                <AvarageRatingCard avarageRating={summary.avarageRating}
-                totalReviews={summary.totalReviews}
-                />
+                <AvarageRatingCard avarageRating={summary.avarageRating} totalReviews={summary.totalReviews}/>
                 
                 <DetailedRating rating={summary.ratings}/>
 
