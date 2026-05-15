@@ -18,12 +18,14 @@
   --opacity-blue-color: rgba(0, 123, 255, 0.1);
   --darkblue-color: #2c3545;
   --opacity-darkblue-color: rgba(44, 53, 69, 0.1);
+
+  --font-archivo: "Archivo", sans-serif;
 }
 
 body {
-  font-family: 'Archivo', sans-serif;
+  font-family: var(--font-archivo), sans-serif;
   background-color: var(--background-color);
-  color: var(--primary-color); /* Sätter en mörk standardfärg på texten istället för vit/osynlig */
+  color: var(--primary-color); 
   padding: 0;
   margin: 0;
   width: 100%;
