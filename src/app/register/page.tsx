@@ -8,14 +8,25 @@ export default function RegisterPage() {
   return (
     <div className="flex min-h-screen bg-white">
       {/* Vänster sida: Dekorativ bildbehållare */}
-      <div className="hidden lg:flex w-1/2 items-center justify-center p-12">
-        <div className="relative w-full h-[600px] bg-[#3D4754] rounded-3xl overflow-hidden flex items-center justify-center">
-          <div className="absolute top-8 left-8 text-white font-bold text-2xl flex items-center gap-2">
-            <span className="bg-white text-[#3D4754] px-2 py-0.5 rounded text-sm">
-              s
-            </span>{" "}
-            Shiko
-          </div>
+      <div className="hidden lg:flex w-1/2 items-center justify-center p-15">
+        <div className="relative w-full h-[600px] bg-[#3D4754] rounded-3xl overflow-hidden">
+          {/* Loggan ligger ovanpå bilden */}
+
+          <img
+            src="/shiko-logo-new.svg"
+            alt="Shiko Logo"
+            width={140}
+            height={40}
+            className="absolute top-8 left-8 z-10"
+          />
+
+          <div className="absolute top-8 left-8 z-10 text-white font-bold text-2xl flex items-center gap-2"></div>
+
+          <img
+            src="/welcome-photo.svg"
+            alt="Background image"
+            className="object-cover object-center scale-100 w-full h-full"
+          />
           {/* Här visas den abstrakta bilden från image_9fcec5.png */}
           <div className="text-gray-400 text-center px-10"></div>
         </div>
@@ -35,12 +46,26 @@ export default function RegisterPage() {
             <label className="block text-sm font-medium text-gray-700 mb-1">
               First name
             </label>
-            <input
-              type="text"
-              placeholder="Hasan"
-              className="w-full p-3 border border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
-            />
+
+            <div className="relative">
+              <div className="absolute inset-y-0  left-0 flex items-center pl-3 pointer-events-none">
+                <img
+                  src="/user-icon.svg" // Kontrollera att filnamnet är rätt!
+                  alt="User icon"
+                  width={10}
+                  height={20}
+                  className="opacity-80" // Gör ikonen lite blekare som i Figma
+                />
+              </div>
+
+              <input
+                type="text"
+                placeholder="Hasan"
+                className="w-full p-3 border pl-10 border-gray-200 rounded-lg outline-none focus:ring-2 focus:ring-orange-500"
+              />
+            </div>
           </div>
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Last name
@@ -82,9 +107,9 @@ export default function RegisterPage() {
           </div>
           <div className="w-full pt-4">
             <Link href="/verification">
-            <Button variant="orange" size="lg">
-              Complete
-            </Button>
+              <Button variant="orange" size="lg">
+                Complete
+              </Button>
             </Link>
           </div>
         </form>

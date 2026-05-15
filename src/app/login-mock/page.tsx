@@ -34,9 +34,21 @@ export default function LoginMockPage() {
       {/* Vänster sida: Bilden från Figma */}
       <div className="hidden lg:flex w-1/2 bg-white items-center justify-center p-12">
         <div className="relative w-full h-[600px] bg-[#3D4754] rounded-3xl overflow-hidden">
+          <img
+            src="/welcome-photo.svg"
+            alt="Background image"
+            className="object-cover object-center scale-100 w-full h-full"
+          />
+
           {/* Här kan du lägga in din Shiko-logga */}
           <div className="absolute top-8 left-8 text-white font-bold text-2xl flex items-center gap-2">
-            <span className="bg-white text-[#3D4754] p-1 rounded">S</span> Shiko
+            <img
+              src="/shiko-logo-new.svg"
+              alt="Shiko Logo"
+              width={140}
+              height={40}
+            />
+            {/*<span className="bg-white text-[#3D4754] p-1 rounded">S</span> Shiko*/}
           </div>
           {/* Dekorativt mönster likt image_bc7cea.png */}
           <div className="absolute inset-0 opacity-20 bg-[url('/pattern.png')] bg-cover"></div>
