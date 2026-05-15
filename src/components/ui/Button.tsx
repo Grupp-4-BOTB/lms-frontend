@@ -1,5 +1,5 @@
 type ButtonProps = {
-  children: string;
+  children: React.ReactNode;
   variant?: 'orange' | 'dark'; 
   size?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | '2xl';
   buttonStyle?: 'default' | 'icon';
