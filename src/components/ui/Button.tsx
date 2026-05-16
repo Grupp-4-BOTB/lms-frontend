@@ -5,6 +5,7 @@ type ButtonProps = {
   buttonStyle?: 'default' | 'icon';
   onClick?: () => void;
   disabled?: boolean;
+  className?: string;
 };
 
 export default function Button({
@@ -14,20 +15,21 @@ export default function Button({
     size = 'md',
     buttonStyle = 'default', // "default" = text button, "icon" = square icon button. Ex: <Button buttonStyle="icon" />
     onClick,
+    className = '',
 }: ButtonProps) {
 
-    const baseStyle = 'rounded-md text-white cursor-pointer font-medium transition-colors duration-300';
+    const baseStyle = 'rounded-lg text-white cursor-pointer font-medium transition-colors duration-300';
     const colorStyles = {
-        orange: 'bg-[#ED5735] hover:bg-[#F5C2BA]',
+        orange: 'bg-[var(--accent-color)] hover:bg-[var(--hover-accent-color)]',
         dark: 'bg-[#2C3545] hover:bg-[#7185A8]',
     };
 
     const textSizeStyles = {
-        xs: 'w-fit px-6 py-1 text-xs',
-        sm: 'w-fit px-7 py-1 text-sm',
-        md: 'w-fit px-8 py-2 text-sm',
-        lg: 'w-fit px-9 py-2 text-base',
-        xl: 'w-fit px-10 py-3 text-base',
+        xs: 'w-fit px-5 py-1 text-xs',
+        sm: 'w-fit px-5 py-1 text-sm',
+        md: 'w-fit px-5 py-2 text-sm',
+        lg: 'w-fit px-6 py-2 text-base',
+        xl: 'w-fit px-7 py-3 text-base',
         "2xl": 'w-fit px-11 py-3 text-lg',
     };
 
@@ -42,10 +44,20 @@ export default function Button({
 
     return (
         <button
-            className={`${baseStyle} ${colorStyles[variant]} ${buttonStyle === 'icon' ? iconSizeStyles[size] : textSizeStyles[size]}`}
+            className={`${baseStyle} ${className} ${colorStyles[variant]} ${buttonStyle === 'icon' ? iconSizeStyles[size] : textSizeStyles[size]}`}
             onClick={onClick}
             disabled={disabled}>
             {children}
         </button>
     );
 }
+
+
+// Examples:
+// <Button variant="orange" size="md">Click Me</Button>
+// <Button variant="dark" size="lg">Submit</Button>
+
+//<Button className="flex items-center gap-3" variant="orange" size="md" buttonStyle="default">
+//View Details
+//<img src="/images/courses/arrow-right.svg" alt="" />
+//</Button>

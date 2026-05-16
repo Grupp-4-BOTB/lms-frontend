@@ -1,6 +1,6 @@
 import PopularCourseCard from "@/components/courses/PopularCourseCard";
 import AllCourseCard from "@/components/courses/AllCourseCard";
-
+import Link from "next/link";
 
 // ------- MOCK data  Popular Courses -----------
 const popularCourses = [
@@ -42,8 +42,9 @@ const allCourses = [
     title: "Artificial Intelligence",
     instructorImg: "/images/courses/samantha.svg",
     instructorName: "Samantha William",
-    rating: 5.0,
+    rating: 4.9,
     lessonsCount: 15,
+    duration: "10 hr 30 min",
     href: "/courses"
   },
   {
@@ -54,6 +55,7 @@ const allCourses = [
     instructorName: "Karen Hope",
     rating: 4.7,
     lessonsCount: 25,
+    duration: "15 hr 20 min",
     href: "/courses"
   },
   {
@@ -64,6 +66,7 @@ const allCourses = [
     instructorName: "Jack Sally",
     rating: 5.0,
     lessonsCount: 5,
+    duration: "20 hr 40 min",
     href: "/courses"
   },
   {
@@ -74,6 +77,7 @@ const allCourses = [
     instructorName: "Johnny Ahmed",
     rating: 5.0,
     lessonsCount: 34,
+    duration: "25 hr 10 min",
     href: "/courses"
   },
   {
@@ -84,16 +88,18 @@ const allCourses = [
     instructorName: "Hasan Mahmud",
     rating: 4.7,
     lessonsCount: 30,
+    duration: "30 hr 50 min",
     href: "/courses"
   },
   {
     id: 6,
-    courseImage: "/images/courses/sketch-image.svg",
+    courseImage: "/images/courses/sketch-image.svg", //????
     title: "Sketch for Designer",
     instructorImg: "/images/courses/Jasmin.svg",
     instructorName: "Jasmin Lila",
     rating: 4.5,
     lessonsCount: 16,
+    duration: "12 hr 15 min",
     href: "/courses"
   }
 ];
@@ -101,10 +107,10 @@ const allCourses = [
 export default function CoursesPage() {
   return (
 
-    <section className="px-3 pb-6 rounded-2xl space-y-10 mx-auto">
+    <section className="px-3 pb-5 rounded-2xl space-y-8 mx-auto">
             {/* ----------- Popular Courses Section ---------- */}
 
-            <div className="px-5 py-6 bg-pink-100 rounded-2xl space-y-4">
+            <div className="px-5 py-5 bg-white rounded-2xl space-y-4">
                 <h2 className="font-semibold text-3xl">Popular This Week</h2>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -122,14 +128,15 @@ export default function CoursesPage() {
 
 
             {/* ----------- All Courses Section ---------- */}
-            <div className="py-6 space-y-4">
-              <div className="flex items-center justify-between py-2 px-4">
+            <div className="space-y-2">
+              <div className="flex items-center justify-between px-4">
                 <h2 className="font-semibold text-3xl">All Courses</h2>
-                <p className="text-base">See All</p>
-
+                <Link href="/courses" className="text-base text-orange-600 cursor-pointer">
+                  See All
+                </Link>
               </div>
-                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
 
+                <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
 
                     {allCourses.map((course) => (
                         <AllCourseCard
@@ -140,6 +147,7 @@ export default function CoursesPage() {
                             instructorName={course.instructorName}
                             rating={course.rating}
                             lessonsCount={course.lessonsCount}
+                            duration={course.duration}
                             href={course.href}
                         />
                     ))}
