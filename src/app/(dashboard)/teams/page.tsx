@@ -1,12 +1,45 @@
-import React from 'react'
-import Button from '@/components/ui/Button'
-import ProfileRouting from '@/components/ui/ProfileRouting'
+"use client"
+import React, { useState } from 'react'
 import Members from '@/components/groupmembers/Members';
+import ProfileRouting from '@/components/ui/ProfileRouting'
 import Image from "next/image";
 
 export default function Teams() {
-  return (
 
+{/* MOCK - BÖRJAN */}
+const [members, setMembers] = useState([
+    { id: '1', name: 'Johan Nilsson', role: 'Student' },
+    { id: '2', name: 'Kalle Karlsson', role: 'Student' },
+    { id: '3', name: 'Anna Andersson', role: 'Student' },
+    { id: '4', name: 'Erik Eriksson', role: 'Teacher' },
+]);
+
+// Statet som håller koll på vilka ID:n som är ikryssade
+  const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+  // 2. Logik för att kryssa i/ur en person
+  const handleSelectMember = (id: string) => {
+    setSelectedIds(prev => 
+      prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
+    );
+  };
+
+  // 3. Logik för att radera en person
+  const handleDeleteMember = (id: string) => {
+  // Om personen INTE är ikryssad i checkboxen, gör ingenting (avbryt)
+  if (!selectedIds.includes(id)) {
+    alert("Please, fill in the checkbox to be able to delete the person."); // Valfritt: Ta bort alert om du vill att det bara ska vara tyst
+    return;
+  }
+
+  // Annars raderar vi som vanligt
+  setMembers(prev => prev.filter(m => m.id !== id));
+  setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
+};
+          {/* AVSLUT */}
+
+
+  return (
 <>
 
 <div className="font-bold text-[45px]">Team</div>
@@ -67,12 +100,7 @@ export default function Teams() {
 <div className="bg-white p-10 rounded-[30px] flex flex-col gap-5 w-2/3"> 
 
 <div className="grid grid-cols-2 w-full ">
-      <div className="flex items-center gap-3 pb-3">
-      <input 
-      type="checkbox" 
-      className="w-5 h-5 rounded-[4px] border border-gray-300 accent-[#ED5735] cursor-pointer" />
-      <div>Name</div>
-  </div>
+    <div className="pb-3">Name</div>
 
 <div className="flex items-center gap-2">
   <div className="pb-3">Role</div>
@@ -90,10 +118,21 @@ export default function Teams() {
 
 
 
-<Members />
-<Members />
-<Members />
-<Members />
+
+
+{/* TEAM MEMBERS - ANVÄNDER NU COMPONENTEN */}
+{members.map(member => (
+  <Members 
+    key={member.id}
+    name={member.name}
+    role={member.role}
+    isChecked={selectedIds.includes(member.id)}
+    onCheckChange={() => handleSelectMember(member.id)}
+    onDelete={() => handleDeleteMember(member.id)}
+  />
+))}
+{/* END */}
+
 
       </div>
     </div>
