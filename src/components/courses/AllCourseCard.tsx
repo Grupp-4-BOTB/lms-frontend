@@ -3,6 +3,7 @@ import Link from "next/link";
 
 type Props = {
   courseImage: string;
+  slug: string;
   title: string;
   instructorImg: string;
   instructorName: string;
@@ -12,7 +13,7 @@ type Props = {
   href: string;
 };
 
-export default function AllCourseCard({ courseImage, title, instructorImg, instructorName, rating, lessonsCount, duration, href }: Props) {
+export default function AllCourseCard({ courseImage, slug, title, instructorImg, instructorName, rating, lessonsCount, duration, href }: Props) {
   return (
 
     <div className="flex flex-col gap-3 rounded-2xl bg-green-300 p-4">
@@ -37,7 +38,7 @@ export default function AllCourseCard({ courseImage, title, instructorImg, instr
           <span>{duration}</span>
         </div>
 
-        <Link href={href}>
+        <Link href={`/courses/${slug}`}>
           <Button className="flex items-center gap-3" variant="orange" size="md" buttonStyle="default">
             View Details
             <img src="/images/courses/arrow-right.svg" alt="" className="block h-4 w-4" />
