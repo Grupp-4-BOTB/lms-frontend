@@ -27,7 +27,8 @@ export default function AvarageRatingCards(props : AvarageRatingCardProps){
             <div className="star-ratings">
                 {[1,2,3,4,5].map((star)=> 
                     <span key={star} className={star <= Math.round(avarageRating) ? "orangetext" : "graytext"}>
-                        * //starimage insert here
+                        //starimage insert here
+                        *
                     </span>
                 )}
             </div>
