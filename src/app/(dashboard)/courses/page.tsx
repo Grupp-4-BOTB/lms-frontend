@@ -1,6 +1,9 @@
+"use client"
 import PopularCourseCard from "@/components/courses/PopularCourseCard";
 import AllCourseCard from "@/components/courses/AllCourseCard";
 import Link from "next/link";
+import { useState } from "react";
+import Button from "@/components/ui/Button";
 
 // ------- MOCK data  Popular Courses -----------
 const popularCourses = [
@@ -38,6 +41,7 @@ const popularCourses = [
 const allCourses = [
   {
     id: 1,
+    slug: "artificial-intelligence",
     courseImage: "/images/courses/art-image.svg",
     title: "Artificial Intelligence",
     instructorImg: "/images/courses/samantha.svg",
@@ -49,6 +53,7 @@ const allCourses = [
   },
   {
     id: 2,
+    slug: "data-science-analytics",
     courseImage: "/images/courses/data-image.svg",
     title: "Data Science & Analytics",
     instructorImg: "/images/courses/Karen.svg",
@@ -61,6 +66,7 @@ const allCourses = [
   {
     id: 3,
     courseImage: "/images/courses/digital-image.svg",
+    slug: "digital-marketing",
     title: "Digital Marketing",
     instructorImg: "/images/courses/Jack.svg",
     instructorName: "Jack Sally",
@@ -71,6 +77,7 @@ const allCourses = [
   },
   {
     id: 4,
+    slug: "ui-ux-design-for-beginner",
     courseImage: "/images/courses/ux-image.svg",
     title: "UI/UX Design for Beginner",
     instructorImg: "/images/courses/Johnny.svg",
@@ -82,6 +89,7 @@ const allCourses = [
   },
   {
     id: 5,
+    slug: "fullstack-developer",
     courseImage: "/images/courses/fullstack-image.svg",
     title: "Full stack Developer",
     instructorImg: "/images/courses/Hasan.svg",
@@ -93,7 +101,8 @@ const allCourses = [
   },
   {
     id: 6,
-    courseImage: "/images/courses/sketch-image.svg", //????
+    slug: "sketch-for-designer",
+    courseImage: "/images/courses/sketch-image.svg",
     title: "Sketch for Designer",
     instructorImg: "/images/courses/Jasmin.svg",
     instructorName: "Jasmin Lila",
@@ -101,12 +110,24 @@ const allCourses = [
     lessonsCount: 16,
     duration: "12 hr 15 min",
     href: "/courses"
+  },
+  {
+    id: 7,
+    slug: "foundations-of-digital-marketing",
+    courseImage: "/images/courses/digital-image.svg",
+    title: "Foundations of Digital Marketing",
+    instructorImg: "/images/courses/Jack.svg",
+    instructorName: "Jack Sally",
+    rating: 4.5,
+    lessonsCount: 12,
+    duration: "12 hr 15 min",
+    href: "/courses"
   }
 ];
 
 export default function CoursesPage() {
+  const [showAllCourses, setShowAllCourses] = useState(false);
   return (
-
     <section className="px-3 pb-5 rounded-2xl space-y-8 mx-auto">
             {/* ----------- Popular Courses Section ---------- */}
 
@@ -131,16 +152,17 @@ export default function CoursesPage() {
             <div className="space-y-2">
               <div className="flex items-center justify-between px-4">
                 <h2 className="font-semibold text-3xl">All Courses</h2>
-                <Link href="/courses" className="text-base text-orange-600 cursor-pointer">
-                  See All
-                </Link>
+                <p onClick={() => setShowAllCourses(!showAllCourses)} className="text-base text-orange-600 cursor-pointer">
+                  {showAllCourses ? "Show Less" : "See All"}
+                </p>
               </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-6">
 
-                    {allCourses.map((course) => (
+                    {(showAllCourses ? allCourses : allCourses.slice(0, 6)).map((course) => (
                         <AllCourseCard
                             key={course.id}
+                            slug={course.slug}
                             courseImage={course.courseImage}
                             title={course.title}
                             instructorImg={course.instructorImg}
