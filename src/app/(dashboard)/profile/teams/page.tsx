@@ -42,10 +42,10 @@ const [members, setMembers] = useState([
   return (
 <>
 
-<div className="font-bold text-[45px]">Team</div>
+<div className="font-bold text-[45px] px-4">Team</div>
 
       {/* 1. ROUTING - Helt fristående och fri från resten av koden */}
-      <div className="w-1/2">
+      <div className="w-1/2 px-2">
         <ProfileRouting />
       </div>
 

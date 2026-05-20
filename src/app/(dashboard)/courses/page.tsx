@@ -1,9 +1,14 @@
 "use client"
 import PopularCourseCard from "@/components/courses/PopularCourseCard";
 import AllCourseCard from "@/components/courses/AllCourseCard";
-import Link from "next/link";
-import { useState } from "react";
-import Button from "@/components/ui/Button";
+import { useEffect,useState } from "react";
+
+async function getCourses() {
+  const res = await fetch("https://localhost:7093/api/Courses");
+
+  return res.json();
+}
+
 
 // ------- MOCK data  Popular Courses -----------
 const popularCourses = [
@@ -37,95 +42,20 @@ const popularCourses = [
   }
 ];
 
-// ------- MOCK data All Courses -----------
-const allCourses = [
-  {
-    id: 1,
-    slug: "artificial-intelligence",
-    courseImage: "/images/courses/art-image.svg",
-    title: "Artificial Intelligence",
-    instructorImg: "/images/courses/samantha.svg",
-    instructorName: "Samantha William",
-    rating: 4.9,
-    lessonsCount: 15,
-    duration: "10 hr 30 min",
-    href: "/courses"
-  },
-  {
-    id: 2,
-    slug: "data-science-analytics",
-    courseImage: "/images/courses/data-image.svg",
-    title: "Data Science & Analytics",
-    instructorImg: "/images/courses/Karen.svg",
-    instructorName: "Karen Hope",
-    rating: 4.7,
-    lessonsCount: 25,
-    duration: "15 hr 20 min",
-    href: "/courses"
-  },
-  {
-    id: 3,
-    courseImage: "/images/courses/digital-image.svg",
-    slug: "digital-marketing",
-    title: "Digital Marketing",
-    instructorImg: "/images/courses/Jack.svg",
-    instructorName: "Jack Sally",
-    rating: 5.0,
-    lessonsCount: 5,
-    duration: "20 hr 40 min",
-    href: "/courses"
-  },
-  {
-    id: 4,
-    slug: "ui-ux-design-for-beginner",
-    courseImage: "/images/courses/ux-image.svg",
-    title: "UI/UX Design for Beginner",
-    instructorImg: "/images/courses/Johnny.svg",
-    instructorName: "Johnny Ahmed",
-    rating: 5.0,
-    lessonsCount: 34,
-    duration: "25 hr 10 min",
-    href: "/courses"
-  },
-  {
-    id: 5,
-    slug: "fullstack-developer",
-    courseImage: "/images/courses/fullstack-image.svg",
-    title: "Full stack Developer",
-    instructorImg: "/images/courses/Hasan.svg",
-    instructorName: "Hasan Mahmud",
-    rating: 4.7,
-    lessonsCount: 30,
-    duration: "30 hr 50 min",
-    href: "/courses"
-  },
-  {
-    id: 6,
-    slug: "sketch-for-designer",
-    courseImage: "/images/courses/sketch-image.svg",
-    title: "Sketch for Designer",
-    instructorImg: "/images/courses/Jasmin.svg",
-    instructorName: "Jasmin Lila",
-    rating: 4.5,
-    lessonsCount: 16,
-    duration: "12 hr 15 min",
-    href: "/courses"
-  },
-  {
-    id: 7,
-    slug: "foundations-of-digital-marketing",
-    courseImage: "/images/courses/digital-image.svg",
-    title: "Foundations of Digital Marketing",
-    instructorImg: "/images/courses/Jack.svg",
-    instructorName: "Jack Sally",
-    rating: 4.5,
-    lessonsCount: 12,
-    duration: "12 hr 15 min",
-    href: "/courses"
-  }
-];
+
 
 export default function CoursesPage() {
+  const [allCourses, setAllCourses] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      const courses = await getCourses();
+      setAllCourses(courses);
+    };
+
+    fetchCourses();
+  }, []);
+
   const [showAllCourses, setShowAllCourses] = useState(false);
   return (
     <section className="px-3 pb-5 rounded-2xl space-y-8 mx-auto">
@@ -165,12 +95,12 @@ export default function CoursesPage() {
                             slug={course.slug}
                             courseImage={course.courseImage}
                             title={course.title}
-                            instructorImg={course.instructorImg}
+                            instructorImg={course.instructorImage}
                             instructorName={course.instructorName}
                             rating={course.rating}
                             lessonsCount={course.lessonsCount}
                             duration={course.duration}
-                            href={course.href}
+                            href={`/courses/${course.slug}`}
                         />
                     ))}
                 </div>
