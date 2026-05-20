@@ -45,11 +45,11 @@ export default function Navbar() {
             </Link>
 
             <Link
-              href="/profile/teams"
+              href="/dashboard"
               className="flex items-center gap-3 p-2 rounded-l-full transition-all hover:bg-orange-50 hover:text-orange-600 group"
             >
               <Image src="/liveclass-icon.svg" alt="" width={30} height={30} />
-              Live Classes/nuvarande teams
+              Live Classes
             </Link>
 
             <div className="text-black-600 py-2"> General </div>
@@ -85,7 +85,7 @@ export default function Navbar() {
               <Image src="/helpcenter-icon.svg" alt="" width={30} height={30} />
               Help Center
             </Link>
-
+ 
             <Link
               href="/dashboard"
               className="flex items-center gap-3 p-2 rounded-l-full transition-all hover:bg-orange-50 hover:text-orange-600 group"
