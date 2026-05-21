@@ -4,53 +4,28 @@ import AllCourseCard from "@/components/courses/AllCourseCard";
 import { useEffect,useState } from "react";
 
 async function getCourses() {
-  const res = await fetch("https://localhost:7093/api/Courses");
+  const res = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses");   //fetch(${process.env.NEXT_PUBLIC_API_URL}/api/Courses);??
 
   return res.json();
 }
 
+async function getPopularCourses() {
+  const res = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses/popular");
 
-// ------- MOCK data  Popular Courses -----------
-const popularCourses = [
-  {
-    id: 1,
-    title: "Graphic Design",
-    description: "Creating Visual Content",
-    icon: "/images/courses/course-icon1.svg",
-    href: "/courses"
-  },
-  {
-    id: 2,
-    title: "UI/UX Design",
-    description: "Combines User Interface (UI)",
-    icon: "/images/courses/course-icon2.svg",
-    href: "/courses"
-  },
-  {
-    id: 3,
-    title: "Graphic Design",
-    description: "The Collection of Visual",
-    icon: "/images/courses/course-icon3.svg",
-    href: "/courses"
-  },
-  {
-    id: 4,
-    title: "Web Design",
-    description: "Process of Creating Websites",
-    icon: "/images/courses/course-icon4.svg",
-    href: "/courses"
-  }
-];
-
-
+  return res.json();
+}
 
 export default function CoursesPage() {
   const [allCourses, setAllCourses] = useState<any[]>([]);
+  const [popularCourses, setPopularCourses] = useState<any[]>([]);
 
   useEffect(() => {
     const fetchCourses = async () => {
       const courses = await getCourses();
       setAllCourses(courses);
+
+      const popular = await getPopularCourses();
+      setPopularCourses(popular);
     };
 
     fetchCourses();
