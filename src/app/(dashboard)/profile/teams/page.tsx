@@ -108,7 +108,7 @@ const [members, setMembers] = useState([
   <div className="relative group flex items-center">
     <Image src="/questionmark.svg" alt="" width={15} height={15} className="cursor-pointer pb-3" />
   
-      <div className="hidden group-hover:block absolute left-full ml-2 bg-white z-10 text-xs rounded-[5px] py-1 px-2 border border-gray-200 text-black w-[150px]">
+      <div className="hidden group-hover:block absolute left-full ml-2 bg-white z-10 text-xs rounded-[5px] py-1 px-2 border border-gray-200 text-black w-37.5">
           Displays the member's current role or position within the team.
       </div>
     </div>
