@@ -9,13 +9,18 @@ const [recipientEmail, setRecipientEmail] = useState("");
 
 
 //Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
-const sendInvite = (email: string) => 
+const sendInvite = (email: string) => {
   fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
     headers: { "Content-Type": "application/json" }, 
-    body: JSON.stringify({ recipientEmail: email })
+    body: JSON.stringify({ 
+      recipientEmail: email
+    })
   })
 .then(() => setRecipientEmail("")); // RENSAR BORT EMAILEN FRÅN PLACEHOLDERN NÄR DET SKICKATS
+};
+
+
 
 {/* MOCK FÖR ATT RADERA GROUP - BÖRJAN */}
 const [members, setMembers] = useState([
