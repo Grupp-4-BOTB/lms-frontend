@@ -8,7 +8,7 @@ export default function Teams() {
 const [recipientEmail, setRecipientEmail] = useState("");
 
 
-{/*Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend */}
+//Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
 const sendInvite = (email: string) => 
   fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
