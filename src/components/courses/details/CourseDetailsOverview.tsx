@@ -37,7 +37,7 @@ export default function CourseDetailsOverview({ course }: Props) {
         
         <div className="flex flex-col gap-5">
 
-          <Image src={course.courseOverview.detailImage} alt="" className="w-180 h-75 object-cover rounded-2xl" width={400} height={200} />
+          <Image src={course.courseOverview?.detailImage || course.courseImage} alt="" className="w-180 h-75 object-cover rounded-2xl" width={400} height={200} />
           
           <h2 className="text-2xl font-semibold text-gray-800">{course.title}</h2>
 
