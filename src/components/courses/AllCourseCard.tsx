@@ -16,18 +16,18 @@ type Props = {
 export default function AllCourseCard({ courseImage, slug, title, instructorImg, instructorName, rating, lessonsCount, duration, href }: Props) {
   return (
 
-    <div className="flex flex-col gap-3 rounded-2xl bg-green-300 p-4">
-      <img src={courseImage} alt="" className="w-full rounded-xl object-cover" />
-      <h3 className="font-semibold text-2xl">{title}</h3>
+    <div className="flex flex-col gap-1 rounded-2xl bg-[#f7f8f9] p-4">
+      <img src={courseImage} alt="" className="w-118 h-41 rounded-xl object-cover" />
+      <h3 className="font-semibold text-xl">{title}</h3>
     
       <div className="flex items-center">
-        <img src={instructorImg} alt="" className="w-6 h-6 rounded-full" />
+        <img src={instructorImg} alt="" className="w-5 h-5 rounded-full" />
         <p className="text-sm text-gray-400 ml-2">{instructorName}</p>
-        <span className="text-gray-400 px-7">{rating}
-        <img src="/images/courses/all-courses-star.svg" alt="" className=" inline h-4 w-3 ml-3" /></span>
+        <span className="text-gray-400 text-sm px-7">{rating}
+        <img src="/images/courses/all-courses-star.svg" alt="" className="inline h-4 w-3 ml-3" /></span>
       </div>
 
-      <div className="flex items-center justify-between px-2 text-sm text-gray-400">
+      <div className="flex items-center justify-between px-1 text-xs text-gray-400">
         <div className="flex items-center gap-2">
           <img src="/images/courses/lesson-icon.svg" alt="" />
           <span> {lessonsCount} Lessons</span>
@@ -39,9 +39,9 @@ export default function AllCourseCard({ courseImage, slug, title, instructorImg,
         </div>
 
         <Link href={`/courses/${slug}`}>
-          <Button className="flex items-center gap-3" variant="orange" size="md" buttonStyle="default">
+          <Button className="flex items-center gap-3" variant="orange" size="sm" buttonStyle="default">
             View Details
-            <img src="/images/courses/arrow-right.svg" alt="" className="block h-4 w-4" />
+            <img src="/images/courses/arrow-right.svg" alt="" className="block h-3 w-3" />
           </Button>
         </Link>
 
