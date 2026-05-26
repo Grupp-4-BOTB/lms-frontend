@@ -10,14 +10,14 @@ type Props = {
 export default function PopularCourseCard({ title, description, icon, href }: Props) {
   return (
 
-    <section className="flex items-center justify-between px-5 rounded-md bg-[#f7f8f9] p-4">
+    <section className="flex items-center justify-between px-5 rounded-md bg-[#f7f8f9] p-2">
       <div className="flex items-center gap-3">
         <div className="flex h-10 w-10 items-center justify-center rounded-full bg-gray-100">
           <img src={icon} alt="" className="h-5 w-5 bg-white max-w-md mx-auto" />
         </div>
         <div>
           <h3 className="font-bold">{title}</h3>
-          <p className="text-sm text-gray-400">{description}</p>
+          <p className="text-xs text-gray-400">{description}</p>
         </div>
       </div>
         <Link href={href} className="flex h-9 w-9 items-center justify-center rounded-full bg-gray-900 hover:bg-gray-500 transition-colors">

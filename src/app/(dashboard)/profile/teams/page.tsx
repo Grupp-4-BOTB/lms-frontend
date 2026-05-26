@@ -5,8 +5,24 @@ import ProfileRouting from '@/components/ui/ProfileRouting'
 import Image from "next/image";
 
 export default function Teams() {
+const [recipientEmail, setRecipientEmail] = useState("");
 
-{/* MOCK - BÖRJAN */}
+
+//Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
+const sendInvite = (email: string) => {
+  fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
+    method: "POST", 
+    headers: { "Content-Type": "application/json" }, 
+    body: JSON.stringify({ 
+      recipientEmail: email
+    })
+  })
+.then(() => setRecipientEmail("")); // RENSAR BORT EMAILEN FRÅN PLACEHOLDERN NÄR DET SKICKATS
+};
+
+
+
+{/* MOCK FÖR ATT RADERA GROUP - BÖRJAN */}
 const [members, setMembers] = useState([
     { id: '1', name: 'Johan Nilsson', role: 'Student' },
     { id: '2', name: 'Kalle Karlsson', role: 'Student' },
@@ -66,11 +82,15 @@ const [members, setMembers] = useState([
         <input 
           type="email" 
           placeholder="name@example.com" 
+          value={recipientEmail} // 
+          onChange={(e) => setRecipientEmail(e.target.value)} // lyssnar på tangentbordet och sparar varje bokstav du skriver direkt i RecipientEmail-minnet som är i useState.
           className="w-full p-2 border border-gray-300 rounded-[11px] focus:outline-none focus:border-orange-500"
         />
         
         {/* 1. KNAPP */}
-        <button className="bg-[#ED5735] hover:bg-[#d44828] text-white font-medium py-1 px-6 rounded-[11px] whitespace-nowrap cursor-pointer">
+        <button 
+        onClick={() => sendInvite(recipientEmail)} //När vi trycker på send invite, skickas allt över till vår controller i backend
+        className="bg-[#ED5735] hover:bg-[#d44828] text-white font-medium py-1 px-6 rounded-[11px] whitespace-nowrap cursor-pointer">
             Send Invite
         </button>
     </div>
@@ -108,7 +128,7 @@ const [members, setMembers] = useState([
   <div className="relative group flex items-center">
     <Image src="/questionmark.svg" alt="" width={15} height={15} className="cursor-pointer pb-3" />
   
-      <div className="hidden group-hover:block absolute left-full ml-2 bg-white z-10 text-xs rounded-[5px] py-1 px-2 border border-gray-200 text-black w-[150px]">
+      <div className="hidden group-hover:block absolute left-full ml-2 bg-white z-10 text-xs rounded-[5px] py-1 px-2 border border-gray-200 text-black w-37.5">
           Displays the member's current role or position within the team.
       </div>
     </div>
