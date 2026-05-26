@@ -12,9 +12,14 @@ const [recipientEmail, setRecipientEmail] = useState("");
 const sendInvite = (email: string) => {
   fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
-    headers: { "Content-Type": "application/json" }, 
+    headers: {
+      "Content-Type": "application/json", 
+      "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL
+    }, 
     body: JSON.stringify({ 
-      recipientEmail: email
+      recipientEmail: email,
+      //inviterEmail: "test@test.com", // <-- HAR DENNA SÅLÄNGE FÖR ATT SEN SE OM DET FUNKAR MED GABRIELS KOD
+      //groupId: groupId                     // <-- LÄGG TILL (byt ut mot riktigt ID sen)
     })
   })
 .then(() => setRecipientEmail("")); // RENSAR BORT EMAILEN FRÅN PLACEHOLDERN NÄR DET SKICKATS
