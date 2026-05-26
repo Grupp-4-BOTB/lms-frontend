@@ -1,7 +1,16 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
+  const handleLogOut = (e: React.MouseEvent) => {
+    e.preventDefault();
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("userEmail");
+    localStorage.removeItem("userName");
+    window.location.href = "/login";
+  };
+
   return (
     <>
       <aside className="fixed top-5 left-5 bottom-5 w-64 flex flex-col gap-5 shrink-0 z-50">
@@ -85,9 +94,10 @@ export default function Navbar() {
               <Image src="/helpcenter-icon.svg" alt="" width={30} height={30} />
               Help Center/EmailVerification
             </Link>
- 
+
             <Link
               href="/dashboard"
+              onClick={handleLogOut}
               className="flex items-center gap-3 p-2 rounded-l-full transition-all hover:bg-orange-50 hover:text-orange-600 group"
             >
               <Image src="/logout-icon.svg" alt="" width={30} height={30} />
