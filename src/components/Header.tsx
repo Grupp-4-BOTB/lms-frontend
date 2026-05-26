@@ -15,8 +15,12 @@ export default function Header() {
         const decoded = jwtDecode<any>(token);
 
         // Hämtar e-posten från mitt .NET-system säkert
+        // Skapar en konstant variabel för e-postadressen genom att leta på två olika ställen i den avkodade tokensträngen
         const email =
+          // Kollar om det finns en enkel, standardiserad egenskap som heter rakt av "email"
           decoded.email ||
+          // Om "decoded.email" är tom, används ELLER-tecknen (||) för att hämta värdet från .NET-systemets
+          // långa standardnamn för e-post-claims
           decoded[
             "http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress"
           ];
