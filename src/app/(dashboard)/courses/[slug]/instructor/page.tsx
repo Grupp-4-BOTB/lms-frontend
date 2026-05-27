@@ -1,4 +1,4 @@
-import CourseDetailsOverview from "@/components/courses/details/CourseDetailsOverview";
+import CourseDetailsInstructor from "@/components/courses/details/CourseDetailsInstructor";
 import CourseDetailsHero from "@/components/courses/details/CourseDetailsHero";
 
 type Props = {
@@ -9,8 +9,11 @@ type Props = {
 
 export async function getCourseDetails(slug: string) {
   const courseResponse = await fetch(`https://webapi-shiko-lms.azurewebsites.net/api/Courses/${slug}`);
-
-  return courseResponse.json();
+  return courseResponse.json(); 
+}
+export async function getInstructor(slug: string) {
+  const instructorResponse = await fetch(`https://webapi-shiko-lms.azurewebsites.net/api/Courses/${slug}/instructor`);
+  return instructorResponse.json(); 
 }
 
 export default async function CourseDetailsPage({ params }: Props) {
@@ -18,9 +21,7 @@ export default async function CourseDetailsPage({ params }: Props) {
   const { slug } = await params;
 
   const course = await getCourseDetails(slug);
-
-  console.log("SLUG:", slug);
-  console.log("COURSE:::", course);
+  const instructor = await getInstructor(slug);
 
   const keyPoints = course.courseOverview?.keyPoints
     ? course.courseOverview.keyPoints
@@ -36,9 +37,12 @@ export default async function CourseDetailsPage({ params }: Props) {
   
   return (
     <div className="w-full">
-      <CourseDetailsHero course={course}>
-        <CourseDetailsOverview course={course} />
-      </CourseDetailsHero>
+        <CourseDetailsHero course={course}>
+          <CourseDetailsInstructor 
+            slug={slug} 
+            course={course} 
+            instructor={instructor} />
+        </CourseDetailsHero>
     </div>
   );
 }
