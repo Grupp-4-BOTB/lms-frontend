@@ -1,4 +1,5 @@
 import React from 'react'
+import Image from "next/image";
 
 interface Props {
   name: string;
@@ -21,6 +22,16 @@ export default function Members({ name, role, isChecked, onCheckChange, onDelete
             onChange={onCheckChange} 
             className="w-5 h-5 rounded-[4px] border border-gray-300 accent-[#ED5735] cursor-pointer" 
           />
+
+                <Image 
+          src="/defaultprofile.svg" 
+          alt="Profilbild" 
+          width={50} 
+          height={50} 
+          className="rounded-full object-cover" 
+        />
+
+
           <div>{name}</div>
         </div>
 
