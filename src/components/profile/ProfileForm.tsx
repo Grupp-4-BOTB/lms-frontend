@@ -3,8 +3,12 @@
 import { useState, useRef } from "react";
 import Button from "../ui/Button";
 
-export default function ProfileForm() {
-    const [photo, setPhoto] = useState<string | null>(null);
+interface ProfileFormProps {
+    photoUrl: string | null;
+    onPhotoChange: (url: string) => void;
+}
+
+export default function ProfileForm({ photoUrl, onPhotoChange }: ProfileFormProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     const [firstName, setFirstName] = useState("");
@@ -12,11 +16,25 @@ export default function ProfileForm() {
     const [phoneNumber, setPhoneNumber] = useState("");
     const [description, setDescription] = useState("");
 
-    function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
+    async function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file) {
             const url = URL.createObjectURL(file);
-            setPhoto(url);
+            onPhotoChange(url);
+
+            const formData = new FormData();
+            formData.append("file", file);
+            formData.append("ownerId", "test-user");
+
+            const response = await fetch(
+                `${process.env.NEXT_PUBLIC_PHOTO_API_URL}/api/images/upload`,
+                {
+                    method: "POST",
+                    body: formData,
+                }
+            );
+            const data =await response.json();
+            console.log("Upload image URL:", data.url);
         }
     }
 
@@ -24,7 +42,7 @@ export default function ProfileForm() {
         <div className="flex flex-col gap-4 p-6 m-3 bg-white rounded-xl w-[1000px] h-[650px]">
             <div className="flex items-center gap-8">
                 <div className="w-16 h-16 rounded-xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
-                    {photo ? (<img src={photo} alt="" className="w-full h-full object-cover" />) : <img src="/profile3-icon.svg" alt="Placeholder" className="text-gray-400 text-xs" />}
+                    {photoUrl ? (<img src={photoUrl} alt="" className="w-full h-full object-cover" />) : <img src="/profile3-icon.svg" alt="Placeholder" className="text-gray-400 text-xs" />}
                 </div>
 
                 <button className="rounded-lg px-4 py-2 border border-gray-300 hover:bg-gray-300 text-sm" onClick={() => fileInputRef.current?.click()}>

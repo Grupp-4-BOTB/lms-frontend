@@ -4,12 +4,12 @@ import ProfileCard from "./ProfileCard";
 import Skills from "./Skills/Skills";
 import { useState } from "react";
 
-export default function ProfileBio() {
+export default function ProfileBio({ photoUrl, onPhotoChange }: { photoUrl: string | null; onPhotoChange: (url: string) => void }) {
     const [description, setDescription] = useState("");
 
     return (
         <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] h-[940px] justify-start items-center">
-            <ProfileCard />
+            <ProfileCard photoUrl={photoUrl} onPhotoChange={onPhotoChange} />
             <Skills />
             
             <div className="w-full">

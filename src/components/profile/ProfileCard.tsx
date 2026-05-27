@@ -2,15 +2,19 @@
 
 import { useState, useRef } from "react";
 
-export default function ProfileCard() {
-    const [photo, setPhoto] = useState<string | null>(null);
+interface ProfileCardProps {
+    photoUrl: string | null;
+    onPhotoChange: (url: string) => void;
+}
+
+export default function ProfileCard({ photoUrl, onPhotoChange }: ProfileCardProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
         const file = event.target.files?.[0];
         if (file) {
             const url = URL.createObjectURL(file);
-            setPhoto(url);
+            onPhotoChange(url);
         }
     }
     return (
@@ -20,8 +24,8 @@ export default function ProfileCard() {
             </div>
             <div className="relative -mt-13">
             <div className="w-23 h-23 rounded-full bg-white border-4 border-white flex items-center justify-center overflow-hidden">
-                {photo ? (
-                <img src={photo} alt="" className="w-full h-full object-cover" />
+                {photoUrl ? (
+                <img src={photoUrl} alt="" className="w-full h-full object-cover" />
                 ) : (
                 <img src="/profile3-icon.svg" alt="Placeholder" className="w-full h-full" />
                 )}
