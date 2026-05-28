@@ -18,7 +18,7 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
       return;
     }
 
-    const response = await fetch( `https://localhost:7188/api/courses/${courseId}/reviews`,
+    const response = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}/reviews`,
       {
         method: "POST",
         headers: {
