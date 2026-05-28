@@ -38,16 +38,19 @@ export default function LoginPage() {
     try {
       // ANROP TILL DITT C#-API FÖR LOGIN
       // Här gör vi ett asynkront HTTP POST-anrop (fetch) till vår C# / .NET Core-backend!
-      const response = await fetch("https://localhost:7059/api/Auth/login", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/Auth/login`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email: email, // Skickar med e-posten från vårt React-state
+            password: password, // Skickar med lösenordet från vårt React-state
+          }),
         },
-        body: JSON.stringify({
-          email: email, // Skickar med e-posten från vårt React-state
-          password: password, // Skickar med lösenordet från vårt React-state
-        }),
-      });
+      );
       // Om backend svarar med HTTP status 200-299 (Lyckad inloggning!)
       if (response.ok) {
         const data = await response.json();
