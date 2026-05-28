@@ -5,6 +5,7 @@ type Props = {
   slug: string;
   course: {
     instructorName: string; 
+    instructorImage: string;
   };
   instructor: {
     id: string;
@@ -21,7 +22,7 @@ export default async function CourseDetailsInstructor({ slug, course, instructor
     <section  className="flex gap-5 flex-col">
 
       <div className="flex items-center gap-5">
-        <img src={`/images/courses/${slug}.svg`} alt="" className="w-20 h-20 object-cover rounded-full" />
+        <img src={course.instructorImage} alt={course.instructorName} className="w-20 h-20 object-cover rounded-full" />
 
         <div className="text-gray-800 text-base">
           <h3 className="font-semibold text-xl">{course.instructorName}</h3>
