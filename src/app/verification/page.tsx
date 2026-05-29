@@ -1,7 +1,25 @@
-import React from 'react'
+"use client"; //krävs för useState
+import React, { useState } from 'react';
 import Link from "next/link";
 
 export default function VerificationCodePage() {
+  
+  
+  // TILLAGGD
+  // 2. State för att spara koden användaren skriver in
+  const [code, setCode] = useState("");
+
+  // 3. Funktionen som skickar koden till DITT API
+  const handleVerify = async () => {
+    await fetch("https://webapp-backend-verificationCode.azurewebsites.net/api/verification/verify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ Code: code })
+    });
+  };
+   // TILLAGGD AVSLUT
+  
+  
   return (
     // min-h-screen gör att sidan tar upp hela skärmens höjd, flex delar upp den i två halvor
     <div className=" min-h-screen bg-[var(--background-color)] flex justify-center p-10">
@@ -34,6 +52,8 @@ export default function VerificationCodePage() {
       <input 
         type="text" 
         placeholder="Enter 7-digit code" 
+        value={code} // TILLAGD
+        onChange={(e) => setCode(e.target.value)} // TILLAGD
         className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[var(--accent-color)] focus:border-transparent outline-none transition-all bg-gray-50"
       />
     </div>
@@ -46,7 +66,7 @@ export default function VerificationCodePage() {
 
   <div className="flex justify-between items-center gap-4 pt-5 pb-10">
       <div className="text-[#AAA] text-xs">
-        ***GRÅ TEXT***
+        ***TIMER SOM RÄKNAR NER FRÅN 2 MINUTER***
       </div>
     <div className="underline text-[var(--accent-color)] font-bold cursor-pointer text-xs">
         Resend verification code
@@ -55,11 +75,12 @@ export default function VerificationCodePage() {
 
 
 
-        <Link href="/verification">
-        <button className="w-full px-4 py-2 text-sm font-medium flex justify-center text-white bg-[var(--accent-color)] hover:bg-[var(--hover-accent-color)] rounded-md transition-colors cursor-pointer">
+        
+        <button 
+        onClick={handleVerify} // TILLAGD
+        className="w-full px-4 py-2 text-sm font-medium flex justify-center text-white bg-[var(--accent-color)] hover:bg-[var(--hover-accent-color)] rounded-md transition-colors cursor-pointer">
             Continue
         </button>
-      </Link>
       </div>
 
     </div>
