@@ -16,19 +16,67 @@ export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   // Next.js router för att kunna skicka användaren till en annan sida (t.ex. /home) efter lyckad inloggning
   const router = useRouter();
-
-  // STEGHANTERING (FRÅN E-POST TILL LÖSENORD)
-  const handleNextStep = (e: React.FormEvent) => {
-    e.preventDefault(); // Stoppar sidan från att laddas om (standardbeteende för formulär)
+  // Nya Koden
+  // STEGHANTERING (KONTROLLERA E-POST VIA C# API OCH VALSÄTT VÄG)
+  const handleNextStep = async (e: React.FormEvent) => {
+    e.preventDefault(); // Stoppar sidan från att laddas om
 
     if (!email) {
       alert("Please enter an email address.");
       return;
     }
 
-    // Skicka användaren direkt till nästa steg (lösenordsvyn)
-    setStep(2);
+    setLoading(true); // Startar laddningsläge ("Checking..." visas på knappen)
+
+    try {
+      // ANROP TILL DITT C#-API FÖR ATT KONTROLLERA OM E-POSTEN FINNS I AZURE
+      const response = await fetch(
+        "https://localhost:7113/api/Auth/check-email",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: email }), // Skickar e-posten till C#
+        },
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+
+        if (data.exists) {
+          // SCENARIO A: Användaren finns i Azure -> Visa lösenordsfältet (Step 2)
+          setStep(2);
+        } else {
+          // SCENARIO B: Användaren finns INTE -> Skicka direkt till "Almost There" (Register)
+          // Vi skickar med e-posten i URL:en så att RegisterForm.tsx kan läsa av den!
+          router.push(`/register?email=${email}`);
+        }
+      } else {
+        alert("Something went wrong with the email check. Please try again.");
+      }
+    } catch (error) {
+      console.error("Nätverksfel vid kontroll av e-post:", error);
+      alert(
+        "Network error! Could not reach backend. Is Visual Studio running?",
+      );
+    } finally {
+      setLoading(false); // Stänger av laddningsstatusen
+    }
   };
+
+  // STEGHANTERING (FRÅN E-POST TILL LÖSENORD)
+  //const handleNextStep = (e: React.FormEvent) => {
+  // e.preventDefault(); // Stoppar sidan från att laddas om (standardbeteende för formulär)
+
+  // if (!email) {
+  //   alert("Please enter an email address.");
+  //   return;
+  // }
+
+  // Skicka användaren direkt till nästa steg (lösenordsvyn)
+  // setStep(2);
+  //  };
 
   // API-ANROPET (INLOGGNINGEN)
   const handleLogin = async (e: React.FormEvent) => {
@@ -39,7 +87,7 @@ export default function LoginPage() {
       // ANROP TILL DITT C#-API FÖR LOGIN
       // Här gör vi ett asynkront HTTP POST-anrop (fetch) till vår C# / .NET Core-backend!
       const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/Auth/login`,
+        "https://localhost:7113/api/Auth/login", // Ändra till din faktiska backend-URL och endpoint
         {
           method: "POST",
           headers: {

@@ -1,4 +1,4 @@
- "use client"; // // Talar om för Next.js att detta är en Client Component,
+"use client"; // // Talar om för Next.js att detta är en Client Component,
 //  vilket gör det möjligt att använda states och hooks
 
 import React, { useState, Suspense } from "react";
@@ -52,7 +52,7 @@ export default function RegisterForm() {
     try {
       // ANROP TILL DITT C#-API (IdentityWebApi)
       // ASYNKRONT ANROP: Här skickar vi datan till  IdentityWebApi-backend i C#
-      const response = await fetch("https://localhost:7059/api/Auth/register", {
+      const response = await fetch("https://localhost:7113/api/Auth/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -67,12 +67,22 @@ export default function RegisterForm() {
           email: email,
         }),
       });
+      // New Code
+      // if (response.ok) {
+      //  alert("Registreringen lyckades! Sparad i databasen.");
+      //  Skickar användaren vidare till inloggningsskärmen automatiskt
+      //   router.push("/login");
+      //   }
 
+      //  New Code
       if (response.ok) {
         alert("Registreringen lyckades! Sparad i databasen.");
-        // Skickar användaren vidare till inloggningsskärmen automatiskt
-        router.push("/login");
-      } else {
+
+        // Skickar användaren vidare till inloggningsskärmen och skickar med e-posten i URL
+        router.push(`/login?email=${email}`);
+      }
+      //  New Code
+      else {
         const errorData = await response.text();
         alert(
           `Fel vid registrering: ${errorData || "Kontrollera backend-koden."}`,
