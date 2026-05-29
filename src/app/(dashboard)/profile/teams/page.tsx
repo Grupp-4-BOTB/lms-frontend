@@ -1,20 +1,23 @@
 "use client"
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Members from '@/components/groupmembers/Members';
 import ProfileRouting from '@/components/ui/ProfileRouting'
 import Image from "next/image";
 
 export default function Teams() {
 const [recipientEmail, setRecipientEmail] = useState("");
-
+const [profilePic, setProfilePic] = useState<string>("/defaultprofile.svg");
 
 //Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
 const sendInvite = (email: string) => {
   fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
-    headers: { "Content-Type": "application/json" }, 
+    headers: {
+      "Content-Type": "application/json", 
+      "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL
+    }, 
     body: JSON.stringify({ 
-      recipientEmail: email
+      recipientEmail: email,
     })
   })
 .then(() => setRecipientEmail("")); // RENSAR BORT EMAILEN FRÅN PLACEHOLDERN NÄR DET SKICKATS
@@ -22,13 +25,40 @@ const sendInvite = (email: string) => {
 
 
 
-{/* MOCK FÖR ATT RADERA GROUP - BÖRJAN */}
+
+
+
+
+
+//MOCK FÖR ATT RADERA GROUP - BÖRJAN
 const [members, setMembers] = useState([
     { id: '1', name: 'Johan Nilsson', role: 'Student' },
     { id: '2', name: 'Kalle Karlsson', role: 'Student' },
     { id: '3', name: 'Anna Andersson', role: 'Student' },
     { id: '4', name: 'Erik Eriksson', role: 'Teacher' },
 ]);
+// ISTÄLLET FÖR MOCK-DELEN OVAN
+//const [members, setMembers] = useState<{ id: string; name: string; role: string }[]>([]);
+
+
+
+
+
+React.useEffect(() => {
+  /*fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/Members/groups/4", {  //ÄNDRA TILL API AZURE WEBAPP 
+    headers: {
+      "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL 
+    }
+  })
+  .then(res => (res.ok && res.status !== 204 ? res.json() : [])) // LAGT EN TILLFÄLLIG SPÄRR JUST PGA ATT JAG INTE HAR EN DATABAS. DEN BARA HINDRAR SYSTEMET FRÅN ATT KRASCHA DÅ DET EJ FINNS ANVÄNDARE
+  //.then(res => res.json())
+  .then(data => setMembers(data))
+  .catch(err => console.error("Fel vid hämtning:", err));
+  */
+}, []);
+// ISTÄLLET FÖR MOCK-DELEN OVAN, AVSLUT
+
+
 
 // Statet som håller koll på vilka ID:n som är ikryssade
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
@@ -48,11 +78,27 @@ const [members, setMembers] = useState([
     return;
   }
 
-  // Annars raderar vi som vanligt
-  setMembers(prev => prev.filter(m => m.id !== id));
-  setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
+
+
+
+  // RADERAR PERSONEN FRÅN GRUPPEN I DATABASEN PÅ RIKTIGT
+  /*fetch(`https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/Members/${id}`, { //ÄNDRA TILL API AZURE WEBAPP 
+  method: "DELETE",
+  headers: {
+    "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL 
+  }
+})
+.then(res => {
+  if (res.ok) {*/
+    // Om borttagningen lyckades i databasen ELLER mock, TA BORT ANVÄNDARE FRÅN SKÄRMEN:
+    setMembers(prev => prev.filter(m => m.id !== id));
+    setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
+    /*}
+  });
+  */
 };
-          {/* AVSLUT */}
+  // RADERAR PERSONEN FRÅN GRUPPEN I DATABASEN, AVSLUT
+
 
 
   return (
@@ -79,24 +125,27 @@ const [members, setMembers] = useState([
 <div className="bg-white p-10 rounded-[30px] flex flex-col gap-5 w-2/3"> 
 
 <div className="flex gap-5 w-full">
-        <input 
-          type="email" 
-          placeholder="name@example.com" 
-          value={recipientEmail} // 
-          onChange={(e) => setRecipientEmail(e.target.value)} // lyssnar på tangentbordet och sparar varje bokstav du skriver direkt i RecipientEmail-minnet som är i useState.
-          className="w-full p-2 border border-gray-300 rounded-[11px] focus:outline-none focus:border-orange-500"
-        />
-        
+        <div className="relative w-full flex items-center">
+          <Image src="/envelope.svg" alt="" width={18} height={18} className="absolute left-4 pointer-events-none" />
+          <input
+            type="email" 
+            placeholder="name@example.com" 
+            value={recipientEmail} // 
+            onChange={(e) => setRecipientEmail(e.target.value)}
+            className="w-full p-2 pl-11 border border-gray-300 rounded-[11px] focus:outline-none focus:border-orange-500"
+          />
+        </div>
+
+
         {/* 1. KNAPP */}
         <button 
         onClick={() => sendInvite(recipientEmail)} //När vi trycker på send invite, skickas allt över till vår controller i backend
-        className="bg-[#ED5735] hover:bg-[#d44828] text-white font-medium py-1 px-6 rounded-[11px] whitespace-nowrap cursor-pointer">
+        className="bg-[#ED5735] hover:bg-[#d44828] text-white font-medium py-2 px-6 pl-2 rounded-[11px] whitespace-nowrap cursor-pointer flex items-center gap-2">
+         <Image src="/envelopewhite.svg" alt="" width={15} height={15} className="cursor-pointer" />
             Send Invite
         </button>
     </div>
-        <div className="whitespace-nowrap cursor-pointer flex items-center text-sm text-black font-bold hover:text-orange-600"> 
-          + Add another 
-        </div>
+
 
         </div>
         </div>

@@ -1,18 +1,19 @@
 "use client"
 import PopularCourseCard from "@/components/courses/PopularCourseCard";
 import AllCourseCard from "@/components/courses/AllCourseCard";
+
 import { useEffect,useState } from "react";
 
 async function getCourses() {
-  const res = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses");   //fetch(${process.env.NEXT_PUBLIC_API_URL}/api/Courses);??
+  const coursesResponse = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses");   //fetch(${process.env.NEXT_PUBLIC_API_URL}/api/Courses);??
 
-  return res.json();
+  return coursesResponse.json();
 }
 
 async function getPopularCourses() {
-  const res = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses/popular");
+  const popularResponse = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses/popular");
 
-  return res.json();
+  return popularResponse.json();
 }
 
 export default function CoursesPage() {
