@@ -114,7 +114,7 @@ export default function Navbar() {
               className="flex items-center gap-3 p-2 rounded-l-full transition-all hover:bg-orange-50 hover:text-orange-600 group"
             >
               <Image src="/helpcenter-icon.svg" alt="" width={30} height={30} />
-              Help Center/EmailVerification
+              Help Center
             </Link>
 
             <Link
