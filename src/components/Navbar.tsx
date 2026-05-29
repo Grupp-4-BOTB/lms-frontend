@@ -3,12 +3,34 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function Navbar() {
-  const handleLogOut = (e: React.MouseEvent) => {
+  // Skapar en asynkron funktion för utloggning som lyssnar på ett klick-event
+  const handleLogOut = async (e: React.MouseEvent) => {
+    // Stoppar länkens standardbeteende så att sidan inte laddas om direkt innan vi är klara
     e.preventDefault();
-    localStorage.removeItem("accessToken");
-    localStorage.removeItem("userEmail");
-    localStorage.removeItem("userName");
-    window.location.href = "/login";
+    // Hämtar användarens e-postadress som sparades i webbläsarens lokala minne vid inloggningen
+    const userEmail = localStorage.getItem("userEmail");
+    // Kontrollerar om vi faktiskt hittade en e-postadress i localStorage innan vi går vidare
+    if (userEmail) {
+      try {
+        // Startar ett asynkront anrop (POST-request) till vårt C#-API och väntar (await) på svar
+        await fetch("https://localhost:7113/api/Auth/logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          // Omvandlar vårt JavaScript-objekt med Email till en JSON-sträng som skickas i body
+          body: JSON.stringify({ Email: userEmail }),
+        });
+      } catch (error) {
+        console.error("Fel vid anrop till logout-endpoint:", error);
+      }
+      // Rensar bort vår JWT-token (access token) från webbläsarens lokala minne
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("userEmail");
+      localStorage.removeItem("userName");
+      // Skickar användaren tillbaka till inloggningssidan nu när allt är rensat i både databasen och webbläsaren
+      window.location.href = "/login";
+    }
   };
 
   return (
