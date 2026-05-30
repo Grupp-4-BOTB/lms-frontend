@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 
+//vad ReviewForm functionen ska få in
 type ReviewFormProps = {
   courseId: number;
   studentId: number;
@@ -10,14 +11,16 @@ type ReviewFormProps = {
 
 export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: ReviewFormProps) 
 {
+  //comment satt som tom
   const [comment, setComment] = useState("");
 
+  //körs efter submit
   const handleSubmit = async () => {
     if (comment.trim() === "") {
       alert("Please write a review.");
       return;
     }
-
+    //kör en http request till backend, POST, json data, innehållet är studentId och kommentaren
     const response = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}/reviews`,
       {
         method: "POST",
@@ -38,6 +41,7 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
 
     setComment("");
 
+    //awaitar egentligen fetchReviews
     await onReviewSubmitted();
   };
 
@@ -47,6 +51,7 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
 
       <textarea
         value={comment}
+        //onChange så visar textarea vad som finns i setComment staten
         onChange={(event) => setComment(event.target.value)}
         placeholder="Enter feedback here..."
         className="mt-4 h-32 w-full resize-none rounded-xl bg-gray-100 p-4 text-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-orange-400"
