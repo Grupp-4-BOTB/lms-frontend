@@ -14,7 +14,7 @@ const sendInvite = (email: string) => {
     method: "POST", 
     headers: {
       "Content-Type": "application/json", 
-      "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL
+      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL
     }, 
     body: JSON.stringify({ 
       recipientEmail: email,
@@ -47,7 +47,7 @@ const [members, setMembers] = useState([
 React.useEffect(() => {
   /*fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/Members/groups/4", {  //ÄNDRA TILL API AZURE WEBAPP 
     headers: {
-      "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL 
+      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
     }
   })
   .then(res => (res.ok && res.status !== 204 ? res.json() : [])) // LAGT EN TILLFÄLLIG SPÄRR JUST PGA ATT JAG INTE HAR EN DATABAS. DEN BARA HINDRAR SYSTEMET FRÅN ATT KRASCHA DÅ DET EJ FINNS ANVÄNDARE
@@ -74,7 +74,7 @@ React.useEffect(() => {
   const handleDeleteMember = (id: string) => {
   // Om personen INTE är ikryssad i checkboxen, gör ingenting (avbryt)
   if (!selectedIds.includes(id)) {
-    alert("Please, fill in the checkbox to be able to delete the person."); // Valfritt: Ta bort alert om du vill att det bara ska vara tyst
+    alert("Please, fill in the checkbox to be able to delete the person.");
     return;
   }
 
@@ -85,7 +85,7 @@ React.useEffect(() => {
   /*fetch(`https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/Members/${id}`, { //ÄNDRA TILL API AZURE WEBAPP 
   method: "DELETE",
   headers: {
-    "X-Api-Key": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL 
+    "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL 
   }
 })
 .then(res => {
