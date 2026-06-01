@@ -13,14 +13,18 @@ export default function Navbar() {
     if (userEmail) {
       try {
         // Startar ett asynkront anrop (POST-request) till vårt C#-API och väntar (await) på svar
-        await fetch("https://localhost:7113/api/Auth/logout", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
+        await fetch(
+          "https://shiko-identity-webbapi-gyg4cfe3gshmeabt.germanywestcentral-01.azurewebsites.net/api/Auth/logout",
+          //"https://localhost:7113/api/Auth/logout",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            // Omvandlar vårt JavaScript-objekt med Email till en JSON-sträng som skickas i body
+            body: JSON.stringify({ Email: userEmail }),
           },
-          // Omvandlar vårt JavaScript-objekt med Email till en JSON-sträng som skickas i body
-          body: JSON.stringify({ Email: userEmail }),
-        });
+        );
       } catch (error) {
         console.error("Fel vid anrop till logout-endpoint:", error);
       }

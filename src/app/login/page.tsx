@@ -31,7 +31,8 @@ export default function LoginPage() {
     try {
       // ANROP TILL DITT C#-API FÖR ATT KONTROLLERA OM E-POSTEN FINNS I AZURE
       const response = await fetch(
-        "https://localhost:7113/api/Auth/check-email",
+        "https://shiko-identity-webbapi-gyg4cfe3gshmeabt.germanywestcentral-01.azurewebsites.net/api/Auth/check-email",
+        // "https://localhost:7113/api/Auth/check-email",
         {
           method: "POST",
           headers: {
@@ -87,7 +88,8 @@ export default function LoginPage() {
       // ANROP TILL DITT C#-API FÖR LOGIN
       // Här gör vi ett asynkront HTTP POST-anrop (fetch) till vår C# / .NET Core-backend!
       const response = await fetch(
-        "https://localhost:7113/api/Auth/login", // Ändra till din faktiska backend-URL och endpoint
+        //"https://localhost:7113/api/Auth/login", // Ändra till din faktiska backend-URL och endpoint
+        "https://shiko-identity-webbapi-gyg4cfe3gshmeabt.germanywestcentral-01.azurewebsites.net/api/Auth/login",
         {
           method: "POST",
           headers: {
