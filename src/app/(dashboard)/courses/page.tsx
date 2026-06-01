@@ -36,15 +36,23 @@ export default function CoursesPage() {
       //mapar ut varje course, tar ut course.id och använder för fetchen getRating. Det är här course. delen i kortet hämtar sina värden, exempelvis course.rating
       const coursesWithRatings = await Promise.all(
         courses.map(async (course: any) => {
-          //course.id skickas till getRating
-          const ratingData = await getRating(course.id);
+          try {
+            const ratingData = await getRating(course.id);
 
-          return {
-            // Returnerar samma kurs, men lägger till/uppdaterar rating och totalReviews
-            ...course,
-            rating: ratingData.averageRating,
-            totalReviews: ratingData.totalReviews,
-          };
+            return {
+              ...course,
+              rating: ratingData.averageRating ?? 0,
+              totalReviews: ratingData.totalReviews ?? 0,
+            };
+          } catch (error) {
+            console.error("Kunde inte hämta rating för course:", course.id, error);
+
+            return {
+              ...course,
+              rating: 0,
+              totalReviews: 0,
+            };
+          }
         })
       );
 
