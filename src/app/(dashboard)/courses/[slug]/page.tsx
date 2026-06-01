@@ -8,7 +8,7 @@ type Props = {
 };
 
 export async function getCourseDetails(slug: string) {
-  const courseResponse = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/Courses/${slug}`);
+  const courseResponse = await fetch(`https://webapi-shiko-lms.azurewebsites.net/api/Courses/${slug}`);
 
   return courseResponse.json();
 }
