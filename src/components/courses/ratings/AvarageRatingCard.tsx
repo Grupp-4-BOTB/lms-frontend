@@ -1,42 +1,35 @@
-type AvarageRatingCardProps = {
-    avarageRating: number;
-    totalReviews: number;
-}
+type AverageRatingCardProps = {
+  averageRating: number;
+  totalReviews: number;
+};
 
+export default function AverageRatingCard({averageRating,totalReviews,}: AverageRatingCardProps) 
+{
+  const roundedRating = averageRating.toFixed(1);
 
-export default function AvarageRatingCards(props : AvarageRatingCardProps){
-    const avarageRating = props.avarageRating;
-    const totalReviews = props.totalReviews;
+  return (
+    <div>
+      <h2>Average Rating</h2>
 
-    const roundedRating = avarageRating.toFixed(1);
-
-    return (
+      <div>
         <div>
-            <h2>Avarage Rating</h2>
-            <div>
-                <div>
-                    {roundedRating}
-                    <span>/5</span>
-                </div>
-                <p>
-                    Based on {totalReviews} Reviews
-                </p>
-            </div>
-
-            //lists out stars and colors them in according to avarageRatings number
-            <div className="star-ratings">
-                {[1,2,3,4,5].map((star)=> 
-                    <span key={star} className={star <= Math.round(avarageRating) ? "orangetext" : "graytext"}>
-                        //starimage insert here
-                        *
-                    </span>
-                )}
-            </div>
+          {roundedRating}
+          <span>/5</span>
         </div>
 
+        <p>Based on {totalReviews} Reviews</p>
 
-    )
-
-
-
-};
+        <div className="flex gap-1">
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span
+              key={star}
+              style={{color: star <= Math.round(averageRating)? "var(--accent-color)": "var(--body-text-color)",}}
+            >
+              ★
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
