@@ -26,7 +26,7 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
       return;
     }
     //kör en http request till backend, POST, json data, innehållet är studentId och kommentaren
-    const reviewResponse = await fetch( `${process.env.NEXT_PUBLI5C_API_URL}/api/courses/${courseId}/reviews`,
+    const reviewResponse = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}/reviews`,
       {
         method: "POST",
         headers: {
