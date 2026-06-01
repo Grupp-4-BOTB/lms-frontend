@@ -20,7 +20,6 @@ export default function VerificationCodePage() {
 
 
 
-
   ///////////////// HANDLE-RESEND //////////////////
   // Denna genererar och skickar en helt ny verifieringskod till användarens mail
   const handleResend = async () => {
