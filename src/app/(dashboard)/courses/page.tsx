@@ -5,13 +5,13 @@ import AllCourseCard from "@/components/courses/AllCourseCard";
 import { useEffect,useState } from "react";
 
 async function getCourses() {
-  const coursesResponse = await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/Courses");
+  const coursesResponse = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses");   //fetch(${process.env.NEXT_PUBLIC_API_URL}/api/Courses);??
 
   return coursesResponse.json();
 }
 
 async function getPopularCourses() {
-  const popularResponse = await fetch("${process.env.NEXT_PUBLIC_API_URL}/api/Courses/popular");
+  const popularResponse = await fetch("https://webapi-shiko-lms.azurewebsites.net/api/Courses/popular");
 
   return popularResponse.json();
 }
