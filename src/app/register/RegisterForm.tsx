@@ -52,21 +52,25 @@ export default function RegisterForm() {
     try {
       // ANROP TILL DITT C#-API (IdentityWebApi)
       // ASYNKRONT ANROP: Här skickar vi datan till  IdentityWebApi-backend i C#
-      const response = await fetch("https://localhost:7113/api/Auth/register", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
+      const response = await fetch(
+        "https://shiko-identity-webbapi-gyg4cfe3gshmeabt.germanywestcentral-01.azurewebsites.net/api/Auth/register",
+        // "https://localhost:7113/api/Auth/register",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            // Paketerar om våra React-states till ett JSON-objekt som matchar er C# 'RegisterRequest'-DTO
+            // JavaScript-objekt kan inte skickas direkt över internet till ett annat system. JSON.stringify förvandlar vårt dataobjekt i React till en rå textsträng i JSON-format. Det gör att vår C#-backend
+            // enkelt kan ta emot texten och mappa om den till en C#-klass
+            firstName: firstName,
+            lastName: lastName,
+            password: password,
+            email: email,
+          }),
         },
-        body: JSON.stringify({
-          // Paketerar om våra React-states till ett JSON-objekt som matchar er C# 'RegisterRequest'-DTO
-          // JavaScript-objekt kan inte skickas direkt över internet till ett annat system. JSON.stringify förvandlar vårt dataobjekt i React till en rå textsträng i JSON-format. Det gör att vår C#-backend
-          // enkelt kan ta emot texten och mappa om den till en C#-klass
-          firstName: firstName,
-          lastName: lastName,
-          password: password,
-          email: email,
-        }),
-      });
+      );
       // New Code
       // if (response.ok) {
       //  alert("Registreringen lyckades! Sparad i databasen.");
