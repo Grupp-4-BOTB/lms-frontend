@@ -79,7 +79,8 @@ export default function RegisterForm() {
         alert("Registreringen lyckades! Sparad i databasen.");
 
         // Skickar användaren vidare till inloggningsskärmen och skickar med e-posten i URL
-        router.push(`/login?email=${email}`);
+        // router.push(`/login?email=${email}`);
+        router.push(`/verification?email=${encodeURIComponent(email)}`);
       }
       //  New Code
       else {
