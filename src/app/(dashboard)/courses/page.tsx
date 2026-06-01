@@ -16,8 +16,14 @@ async function getPopularCourses() {
 
 // Hämtar rating för en kurs, courseId skickas in genom mapningen
 async function getRating(courseId: string) {
-  const response = await fetch(`https://webapp-ratings-richard-hvatdegdcyfkejda.swedencentral-01.azurewebsites.net/api/courses/${courseId}/ratings`
-  );
+  const response = await fetch(`https://webapp-ratings-richard-hvatdegdcyfkejda.swedencentral-01.azurewebsites.net/api/courses/${courseId}/ratings/summary`);
+
+   if (!response.ok) {
+    return {
+      averageRating: 0,
+      totalReviews: 0,
+    };
+  }
 
   return response.json();
 }
