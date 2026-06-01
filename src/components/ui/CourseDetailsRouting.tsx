@@ -13,14 +13,14 @@ export default function CourseDetailsRouting({ slug }: { slug: string }) {
     : 'text-[#AAA] hover:bg-[var(--primary-color)] hover:text-white'}`;
 
   return (
-
+    
     <div className="flex gap-4 text-sm">
         <Link
             href={`/courses/${slug}`}
             className={linkClass(`/courses/${slug}`)}>
             Overview
         </Link>
-        //beroende på vilken slugen är exempelvis kurs i C# så routar den till /courses/c#/reviews
+              {/* /beroende på vilken slugen är exempelvis kurs i C# så routar den till /courses/c#/reviews */}
         <Link
             href={`/courses/${slug}/reviews`}
             className={linkClass(`/courses/${slug}/Reviews`)}>
