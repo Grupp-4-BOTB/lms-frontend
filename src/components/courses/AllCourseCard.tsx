@@ -1,5 +1,6 @@
 import Button from "../ui/Button";
 import Link from "next/link";
+import CourseRatingBadge from "./ratings/CourseRatingStar";
 
 type Props = {
   courseImage: string;
@@ -11,9 +12,10 @@ type Props = {
   lessonsCount: number;
   duration: string;
   href: string;
+  totalReviews: number;
 };
 
-export default function AllCourseCard({ courseImage, slug, title, instructorImg, instructorName, rating, lessonsCount, duration, href }: Props) {
+export default function AllCourseCard({ courseImage, slug, title, instructorImg, instructorName, rating, totalReviews, lessonsCount, duration, href }: Props) {
   return (
 
     <div className="flex flex-col gap-1 rounded-2xl bg-[#f7f8f9] p-4">
@@ -23,8 +25,7 @@ export default function AllCourseCard({ courseImage, slug, title, instructorImg,
       <div className="flex items-center">
         <img src={instructorImg} alt="" className="w-5 h-5 rounded-full" />
         <p className="text-sm text-gray-400 ml-2">{instructorName}</p>
-        <span className="text-gray-400 text-sm px-7">{rating}
-        <img src="/images/courses/all-courses-star.svg" alt="" className="inline h-4 w-3 ml-3" /></span>
+        <CourseRatingBadge averageRating={rating} totalReviews={totalReviews}/>
       </div>
 
       <div className="flex items-center justify-between px-1 text-xs text-gray-400">
