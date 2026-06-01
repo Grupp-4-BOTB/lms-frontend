@@ -20,9 +20,9 @@ export default function CourseDetailsRouting({ slug }: { slug: string }) {
             className={linkClass(`/courses/${slug}`)}>
             Overview
         </Link>
-
+        //beroende på vilken slugen är exempelvis kurs i C# så routar den till /courses/c#/reviews
         <Link
-            href={`/courses/${slug}/Reviews`}
+            href={`/courses/${slug}/reviews`}
             className={linkClass(`/courses/${slug}/Reviews`)}>
               Reviews
         </Link>
