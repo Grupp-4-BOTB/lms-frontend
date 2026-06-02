@@ -1,9 +1,11 @@
 "use client"; //krävs för useState
 import React, { useState, useEffect } from 'react';
 import Link from "next/link";
+import { useSearchParams } from 'next/navigation';    // TILLAGD FÖR EMAIL FÖR GABRIEL
 
 export default function VerificationCodePage() {
-  
+  const searchParams = useSearchParams();             // TILLAGD FÖR EMAIL FÖR GABRIEL
+  const email = searchParams.get('email') || "";      // TILLAGD FÖR EMAIL FÖR GABRIEL
   
   
   // TILLAGGD
@@ -35,7 +37,8 @@ export default function VerificationCodePage() {
         headers: {
       "Content-Type": "application/json", //förklarar om det är en jsonfil, text, bild etc. Vilken typ av format det som skickas är. 
       "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
-    }
+    },
+    body: JSON.stringify({ Email: email })                          // TILLAGD FÖR EMAIL FÖR GABRIEL
       });
     } catch (error) {
       console.error("Unable to send new code:", error);
@@ -92,7 +95,7 @@ export default function VerificationCodePage() {
       "Content-Type": "application/json", //förklarar om det är en jsonfil, text, bild etc. Vilken typ av format det som skickas är. 
       "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
     },
-      body: JSON.stringify({ Code: code })
+      body: JSON.stringify({ Email: email, Code: code })              // TILLAGD FÖR EMAIL FÖR GABRIEL
     });
   };
    // SKICKAR KODEN TILL MITT API, AVSLUT
