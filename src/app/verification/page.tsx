@@ -1,9 +1,9 @@
 "use client"; //krävs för useState
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import Link from "next/link";
 import { useSearchParams } from 'next/navigation';    // TILLAGD FÖR EMAIL FÖR GABRIEL
 
-export default function VerificationCodePage() {
+function VerificationCodeContent() {
   const searchParams = useSearchParams();             // TILLAGD FÖR EMAIL FÖR GABRIEL
   const email = searchParams.get('email') || "";      // TILLAGD FÖR EMAIL FÖR GABRIEL
   
@@ -179,4 +179,17 @@ export default function VerificationCodePage() {
 
     </div>
   )
+}
+
+
+
+
+
+
+export default function VerificationCodePage() {
+  return (
+    <Suspense fallback={<div>Laddar...</div>}>
+      <VerificationCodeContent />
+    </Suspense>
+  );
 }
