@@ -7,13 +7,28 @@ type Props = {
   };
 };
 
-export async function getCourseDetails(slug: string) {
+async function getCourseDetails(slug: string) {
   const courseResponse = await fetch(`https://webapi-shiko-lms.azurewebsites.net/api/Courses/${slug}`);
   return courseResponse.json(); 
 }
-export async function getInstructor(slug: string) {
+async function getInstructor(slug: string) {
   const instructorResponse = await fetch(`https://webapi-shiko-lms.azurewebsites.net/api/Courses/${slug}/instructor`);
   return instructorResponse.json(); 
+}
+
+// Hämtar rating från Rating API med hjälp av courseId som skickas in genom mapningen i page.tsx,
+// RatingData används sedan för att visa averageRating och totalReviews i CourseDetailsHero.
+async function getRating(courseId: string) {
+  const RatingResponse = await fetch(`https://webapp-ratings-richard-hvatdegdcyfkejda.swedencentral-01.azurewebsites.net/api/courses/${courseId}/ratings/summary`);
+
+   if (!RatingResponse.ok) {
+    return {
+      averageRating: 0,
+      totalReviews: 0,
+    };
+  }
+
+  return RatingResponse.json();
 }
 
 export default async function CourseDetailsPage({ params }: Props) {
@@ -22,18 +37,10 @@ export default async function CourseDetailsPage({ params }: Props) {
 
   const course = await getCourseDetails(slug);
   const instructor = await getInstructor(slug);
+  const ratingData = await getRating(course.id);
 
-  const keyPoints = course.courseOverview?.keyPoints
-    ? course.courseOverview.keyPoints
-        .split(";")
-        .map((p: string) => p.trim())
-        .filter((p: string) => p.length > 0)
-    : [];
-
-  course.courseOverview = { 
-    ...course.courseOverview, 
-    keyPoints: keyPoints 
-  };
+  course.rating = ratingData.averageRating;
+  course.totalReviews = ratingData.totalReviews;
   
   return (
     <div className="w-full">
@@ -41,7 +48,8 @@ export default async function CourseDetailsPage({ params }: Props) {
           <CourseDetailsInstructor 
             slug={slug} 
             course={course} 
-            instructor={instructor} />
+            instructor={instructor}
+          />
         </CourseDetailsHero>
     </div>
   );
