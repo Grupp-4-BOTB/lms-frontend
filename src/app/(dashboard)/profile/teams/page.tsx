@@ -1,3 +1,4 @@
+
 "use client"
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation';
@@ -5,30 +6,15 @@ import Members from '@/components/groupmembers/Members';
 import ProfileRouting from '@/components/ui/ProfileRouting'
 import Image from "next/image";
 
-
 export default function Teams() {
 const params = useParams();           // HÄMTAR  UT ALLA PARAMS
 const groupId = params.id as string; // SKAPAR VARIABELN GROUPID EFTERSOM DEN INTE FUNKADE ANNARS
-
 const [recipientEmail, setRecipientEmail] = useState("");
 const [errorMessage, setErrorMessage] = useState(""); //FÖR FELMEDDELANDE
 
 
 
 
-
-// PROFILBILD FRÅN EMILS API
-const [profilePics, setProfilePics] = useState<{ id: string; imageUrl: string }[]>([]);
-
-useEffect(() => {
-  fetch("https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net/api/images", { //Ingen databas så kan inte se om detta stämmer (Emils API)
-    headers: { 
-      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string } // SKRIV emils lösen och öägg till under env.local NÄR han fixat det
-  })
-  .then(res => res.ok ? res.json() : null)
-  .then(data => data && setProfilePics(data))
-  .catch(err => console.error("Unable to find profilepicture:", err));
-}, []);
 
 
 
@@ -67,7 +53,6 @@ const sendInvite = (email: string) => {
 
 
 
-
 //MOCK FÖR ATT RADERA GROUP - BÖRJAN
 /*const [members, setMembers] = useState([
     { id: '1', name: 'Johan Nilsson', role: 'Student' },
@@ -77,7 +62,6 @@ const sendInvite = (email: string) => {
 ]);*/
 // ISTÄLLET FÖR MOCK-DELEN OVAN
 const [members, setMembers] = useState<{ id: string; name: string; role: string }[]>([]);
-
 
 
 
@@ -96,17 +80,14 @@ React.useEffect(() => {
 // ISTÄLLET FÖR MOCK-DELEN OVAN, AVSLUT
 
 
-
 // Statet som håller koll på vilka ID:n som är ikryssade
   const [selectedIds, setSelectedIds] = useState<string[]>([]);
-
   // 2. Logik för att kryssa i/ur en person
   const handleSelectMember = (id: string) => {
     setSelectedIds(prev => 
       prev.includes(id) ? prev.filter(item => item !== id) : [...prev, id]
     );
   };
-
   // 3. Logik för att radera en person
   const handleDeleteMember = (id: string) => {
   // Om personen INTE är ikryssad i checkboxen, gör ingenting (avbryt)
@@ -114,7 +95,6 @@ React.useEffect(() => {
     alert("Please, fill in the checkbox to be able to delete the person.");
     return;
   }
-
 
   // RADERAR PERSONEN FRÅN GRUPPEN I DATABASEN PÅ RIKTIGT
   fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/${id}`, { //DENNA ÄR NU ÄNDRAD TILL KORREKT OCH PEKAR PÅ MIN TEAMS PROJEKT > TILL CONTROLLERS TEAMSCONTROLLER OCH RADERINGSFUNTKIONEN I DEN       
@@ -133,27 +113,21 @@ React.useEffect(() => {
   }
 return (
 <>
-
 <div className="font-bold text-[45px] px-4">Team</div>
-
       {/* 1. ROUTING - Helt fristående och fri från resten av koden */}
       <div className="w-1/2 px-2">
         <ProfileRouting />
       </div>
 
-
 <div className="p-6 flex items-start justify-between gap-8">
-
 {/* 1. VÄNSTER SIDA */}
 <div className="max-w-md w-1/3 flex flex-col gap-1">
         <div className="font-semibold text-lg">Invite team member</div>
         <div className="text-gray-500">Get your study group up and running faster by inviting your team to collaborate</div>
       </div>
 
-
 {/* 1. HÖGER SIDA */}
 <div className="bg-white p-10 rounded-[30px] flex flex-col gap-5 w-2/3"> 
-
 <div className="flex gap-5 w-full">
         <div className="relative w-full flex items-center">
           <Image src="/envelope.svg" alt="" width={18} height={18} className="absolute left-4 pointer-events-none" />
@@ -166,7 +140,6 @@ return (
           />
         </div>
 
-
         {/* 1. KNAPP */}
         <button 
         onClick={() => sendInvite(recipientEmail)} 
@@ -175,7 +148,6 @@ return (
             Send Invite
         </button>
     </div>
-
 {errorMessage && <p className="text-red-500 font-semibold text-sm mt-1">{errorMessage}</p>}       
 </div>
         </div>
@@ -185,25 +157,19 @@ return (
 
 
 
-
 <div className="p-6 flex items-start justify-between gap-8">
-
 {/* 2. VÄNSTER SIDA */}
 <div className="max-w-md w-1/3 flex flex-col gap-1">
         <div className="font-semibold text-lg">Team members</div>
         <div className="text-gray-500">Manage your existing team and change roles/ permissions.</div>
       </div>
 
-
 {/* 2. HÖGER SIDA */}
 <div className="bg-white p-10 rounded-[30px] flex flex-col gap-5 w-2/3"> 
-
 <div className="grid grid-cols-2 w-full ">
     <div className="pb-3">Name</div>
-
 <div className="flex items-center gap-2">
   <div className="pb-3">Role</div>
-
   <div className="relative group flex items-center">
     <Image src="/questionmark.svg" alt="" width={15} height={15} className="cursor-pointer pb-3" />
   
@@ -218,17 +184,14 @@ return (
 
 
 
-
 {/* TEAM MEMBERS - ANVÄNDER NU COMPONENTEN */}
 {members.map(member => {
-  const matchedPic = profilePics.find(pic => pic.id === member.id)?.imageUrl || "/defaultprofile.svg";
-
   return (
     <Members 
       key={member.id}
       name={member.name}
       role={member.role}
-      profilePic={matchedPic}
+      profilePic="/defaultprofile.svg"
       isChecked={selectedIds.includes(member.id)}
       onCheckChange={() => handleSelectMember(member.id)}
       onDelete={() => handleDeleteMember(member.id)}
@@ -236,7 +199,6 @@ return (
   );
 })}
 {/* END */}
-
 
       </div>
     </div>
