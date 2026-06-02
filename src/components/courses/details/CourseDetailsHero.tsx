@@ -50,6 +50,7 @@ export default function CourseDetailsHero({ course, children }: Props) {
                         </span>
                     </div>
                 </div>
+                
                 {/*----------  Course details routing /ui component ----------*/}
                 <div className="flex items-center">
                     <CourseDetailsRouting slug={course.slug} />
