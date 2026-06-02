@@ -73,7 +73,7 @@ export default function CoursesPage() {
 
   return (
     <section className="px-2 pb-3 rounded-2xl space-y-7 mx-auto">
-      <div className="px-5 py-2 bg-white rounded-2xl space-y-1">
+      <div className="px-5 py-5 bg-white rounded-2xl space-y-1 border border-gray-200">
         <h2 className="font-semibold text-2xl">Popular This Week</h2>
 
         <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -101,7 +101,7 @@ export default function CoursesPage() {
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 2xl:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8 ">
           {(showAllCourses ? allCourses : allCourses.slice(0, 6)).map((course) => (
             <AllCourseCard
               key={course.id}
