@@ -130,6 +130,8 @@ export default function LoginPage() {
         localStorage.setItem("accessToken", actualToken);
         localStorage.setItem("userEmail", email);
         localStorage.setItem("userName", actualName);
+        localStorage.setItem("userId", actualUserId.toString());
+
 
         // Sparar unikt userId i webbläsaren så att kollegor (Emil & Ivona)
         // kan hämta upp det i sina mikrokomponenter via localStorage.getItem("userId")

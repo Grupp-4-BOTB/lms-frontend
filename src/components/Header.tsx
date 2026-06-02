@@ -38,7 +38,7 @@ export default function Header() {
   return (
     <>
       {/* 2. TOPPEN RUTAN */}
-      <header className="fixed top-5 left-[295px] right-5 h-17 bg-white z-50 border-b flex justify-between items-center px-6">
+      <header className="fixed top-5 left-[295px] right-5 h-17 bg-white z-50 border border-gray-200 flex justify-between items-center px-6 rounded-lg">
         {/* Vänsterdel inuti headern (Här kan ni ha sökfält eller titel) */}
         <div></div>
 
@@ -60,7 +60,7 @@ export default function Header() {
               {/* Länkar till er inloggningssida */}
               <Link href={isLoggedIn ? "/home" : "/login"}>
                 <button
-                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors  ${
+                  className={`px-4 py-2 text-sm font-medium rounded-lg transition-colors border border-gray-200  ${
                     isLoggedIn
                       ? "bg-green-500 text-white cursor-pointer hover:bg-green-600" // Grön stil om inloggad
                       : "text-gray-700 hover:bg-gray-50 cursor-pointer" // Grå stil om utloggad

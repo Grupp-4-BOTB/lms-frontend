@@ -34,28 +34,26 @@ useEffect(() => {
 
 
 
-
-
-
-
 //Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
+// DENNA FUNKAR NU **
 const sendInvite = (email: string) => {
-  fetch("https://webapp-backend-emailrequest.azurewebsites.net/api/emailrequest/emailinvite", { 
+  // FIXAD URL:
+  fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
     headers: {
       "Content-Type": "application/json", 
-      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL
+      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string 
     }, 
     body: JSON.stringify({ 
       recipientEmail: email,
       inviterEmail: "test@inviter.com", 
-      groupId: 123 // HÅRDKODAT TEST-ID: Nu slipper koden krascha på din URL!
+      groupId: 123 
     })
   })
-.then(async (res) => {
+  .then(async (res) => {
     if (!res.ok) {
-      const errorData = await res.json().catch(() => ({}));
-      throw new Error(errorData.error || errorData.message || "This user does not exist.");
+      const errorText = await res.text();
+      throw new Error(errorText || "Something went wrong.");
     }
     setRecipientEmail(""); 
     setErrorMessage(""); 
@@ -64,6 +62,9 @@ const sendInvite = (email: string) => {
     setErrorMessage(err.message); 
   });
 };
+
+
+
 
 
 
@@ -175,7 +176,8 @@ return (
         </button>
     </div>
 
-{errorMessage && <p className="text-red-500 font-semibold text-sm mt-1">Unable to fetch the email. </p>}        </div>
+{errorMessage && <p className="text-red-500 font-semibold text-sm mt-1">{errorMessage}</p>}       
+</div>
         </div>
 
 

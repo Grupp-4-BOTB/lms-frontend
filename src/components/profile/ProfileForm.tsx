@@ -27,7 +27,7 @@ export default function ProfileForm({ photoUrl, onPhotoChange }: ProfileFormProp
             formData.append("ownerId", "test-user");
 
             const response = await fetch(
-                `${process.env.NEXT_PUBLIC_PHOTO_API_URL}/api/images/upload`,
+                `https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net/api/images/upload`,
                 {
                     method: "POST",
                     body: formData,
