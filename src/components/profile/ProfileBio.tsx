@@ -8,13 +8,13 @@ export default function ProfileBio({ photoUrl, onPhotoChange }: { photoUrl: stri
     const [description, setDescription] = useState("");
 
     return (
-        <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] h-[940px] justify-start items-center">
+        <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] h-[715px] justify-start items-center">
             <ProfileCard photoUrl={photoUrl} onPhotoChange={onPhotoChange} />
             <Skills />
             
-            <div className="w-full">
+            {/* <div className="w-full">
                 <p className="text-primary text-lg font-bold px-2">Achievements</p>
-            </div>
+            </div> */}
             
             <div className="py-2">
                 <p className="text-primary text-lg font-bold px-3 mb-2">Bio</p>
