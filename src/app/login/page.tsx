@@ -110,6 +110,7 @@ export default function LoginPage() {
         // Den här raden kollar om token ligger i data.token, data.accessToken eller data.tokenString
         const actualToken =
           data.token || data.accessToken || data.tokenString || data;
+
         const actualName =
           data.firstName ||
           data.name ||
@@ -118,11 +119,9 @@ export default function LoginPage() {
           data.fullName ||
           "User";
 
-          const actualUserId =
-            data.id ||
-            data.userId ||
-            data.studentId ||
-            data.UserId;
+        // Extrahera unikt userId (GUID) från C#-backend responsen
+        // Vi kollar om ID:t ligger i data.userId, data.id eller data.Id
+        const actualUserId = data.userId || data.id || data.Id || "";
 
         // SPARAR INFO I WEBBLÄSAREN SÅ VI KAN VISA VEM SOM ÄR INLOGGAD!
         // LOCAL STORAGE (SPARA SESSIONEN)
@@ -133,6 +132,10 @@ export default function LoginPage() {
         localStorage.setItem("userName", actualName);
         localStorage.setItem("userId", actualUserId.toString());
 
+
+        // Sparar unikt userId i webbläsaren så att kollegor (Emil & Ivona)
+        // kan hämta upp det i sina mikrokomponenter via localStorage.getItem("userId")
+        localStorage.setItem("userId", actualUserId);
 
         alert(`Welcome back! Logged in as: ${email}`);
 
