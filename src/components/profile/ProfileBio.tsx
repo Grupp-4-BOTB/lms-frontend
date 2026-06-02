@@ -8,9 +8,9 @@ export default function ProfileBio({ photoUrl, onPhotoChange }: { photoUrl: stri
     const [description, setDescription] = useState("");
 
     return (
-        <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] h-[715px] justify-start items-center">
+        <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] h-[715px] justify-start ">
             <ProfileCard photoUrl={photoUrl} onPhotoChange={onPhotoChange} />
-            <Skills />
+            <Skills ownerId="user123" isOwner={true}    />
             
             {/* <div className="w-full">
                 <p className="text-primary text-lg font-bold px-2">Achievements</p>
