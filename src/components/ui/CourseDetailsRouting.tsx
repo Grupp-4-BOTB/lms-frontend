@@ -2,7 +2,6 @@
 import Link from 'next/link'
 import { usePathname } from 'next/navigation';
 
-//import CourseDetailsRouting from "@/components/ui/CourseDetailsRouting";
 
 export default function CourseDetailsRouting({ slug }: { slug: string }) {
   const pathname = usePathname();
