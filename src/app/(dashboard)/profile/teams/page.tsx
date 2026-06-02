@@ -34,14 +34,11 @@ useEffect(() => {
 
 
 
-
-
-
-
 //Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
-//Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
+// DENNA FUNKAR NU **
 const sendInvite = (email: string) => {
-  fetch("https://webapp-backend-emailrequest.azurewebsites.net/api/emailrequest/emailinvite", { 
+  // FIXAD URL:
+  fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
     headers: {
       "Content-Type": "application/json", 
@@ -55,7 +52,6 @@ const sendInvite = (email: string) => {
   })
   .then(async (res) => {
     if (!res.ok) {
-      // MODIFIERAD: Hämtar nu felmeddelandet som ren text från C# (.text() istället för .json())
       const errorText = await res.text();
       throw new Error(errorText || "Something went wrong.");
     }
@@ -66,7 +62,6 @@ const sendInvite = (email: string) => {
     setErrorMessage(err.message); 
   });
 };
-
 
 
 
