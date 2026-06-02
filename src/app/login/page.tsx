@@ -118,6 +118,12 @@ export default function LoginPage() {
           data.fullName ||
           "User";
 
+          const actualUserId =
+            data.id ||
+            data.userId ||
+            data.studentId ||
+            data.UserId;
+
         // SPARAR INFO I WEBBLÄSAREN SÅ VI KAN VISA VEM SOM ÄR INLOGGAD!
         // LOCAL STORAGE (SPARA SESSIONEN)
         // Vi sparar vår JWT-token och användarinfo lokalt i webbläsaren
@@ -125,6 +131,8 @@ export default function LoginPage() {
         localStorage.setItem("accessToken", actualToken);
         localStorage.setItem("userEmail", email);
         localStorage.setItem("userName", actualName);
+        localStorage.setItem("userId", actualUserId.toString());
+
 
         alert(`Welcome back! Logged in as: ${email}`);
 

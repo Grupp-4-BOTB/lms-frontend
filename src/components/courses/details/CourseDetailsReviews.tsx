@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import CourseRating from "@/components/courses/ratings/CourseRatings";
 import CourseReviews from "@/components/courses/reviews/CourseReviews";
 
@@ -10,7 +11,20 @@ type Props = {
 };
 
 export default function CourseDetailsReviews({ course }: Props) {
-  const studentId = 2; // temporärt lägg till studentId från gabriels kod
+
+  const [studentId, setStudentId] = useState<number | null>(null);
+
+  useEffect(() => {
+    const storedUserId = localStorage.getItem("userId");
+    
+    if (storedUserId) {
+      setStudentId(Number(storedUserId));
+    }
+  }, []);
+
+  if (!studentId) {
+    return <p>Please login to write a review.</p>;
+  }
 
   return (
     <div className="flex flex-col gap-6">
