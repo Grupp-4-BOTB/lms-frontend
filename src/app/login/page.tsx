@@ -11,8 +11,8 @@ import { jwtDecode } from "jwt-decode";
 export class userModel{
   nameid: string = "";
   email: string = "";
-  firstName: string = "";
-  lastName: string = "";
+  FirstName: string = "";
+  LastName: string = "";
 }
  
 
@@ -120,20 +120,7 @@ export default function LoginPage() {
         // Den här raden kollar om token ligger i data.token, data.accessToken eller data.tokenString
         const actualToken =
           data.token || data.accessToken || data.tokenString || data;
-
-        const actualName =
-          data.firstName ||
-          data.name ||
-          data.Name ||
-          data.username ||
-          data.fullName ||
-          "User";
-
-          const actualUserId =
-            data.id ||
-            data.userId ||
-            data.studentId ||
-            data.nameid;
+         
 
         // SPARAR INFO I WEBBLÄSAREN SÅ VI KAN VISA VEM SOM ÄR INLOGGAD!
         // LOCAL STORAGE (SPARA SESSIONEN)
@@ -142,15 +129,13 @@ export default function LoginPage() {
         localStorage.setItem("accessToken", actualToken);
         const decoded = jwtDecode<userModel>(actualToken);
         localStorage.setItem("userEmail", decoded.email);
-        localStorage.setItem("userName", decoded.firstName);
+        localStorage.setItem("userName", decoded.FirstName);
         localStorage.setItem("userId", decoded.nameid);
-        localStorage.setItem("userLastname", decoded.lastName);
+        localStorage.setItem("userLastname", decoded.LastName);
 
          
 
-        // Sparar unikt userId i webbläsaren så att kollegor (Emil & Ivona)
-        // kan hämta upp det i sina mikrokomponenter via localStorage.getItem("userId")
-        localStorage.setItem("userId", actualUserId);
+       
 
         alert(`Welcome back! Logged in as: ${email}`);
 
