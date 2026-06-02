@@ -16,7 +16,7 @@ export default function CourseDetailsReviews({ course }: Props) {
   const [studentId, setStudentId] = useState<string | null>(null);
 
   useEffect(() => {
-    const storedUserId = localStorage.getItem("nameid");
+    const storedUserId = localStorage.getItem("userId");
 
     if (storedUserId) {
       setStudentId((storedUserId));
