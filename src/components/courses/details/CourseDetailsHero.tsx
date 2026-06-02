@@ -1,7 +1,7 @@
 import Image from "next/image";
 import CourseDetailsRouting from "@/components/ui/CourseDetailsRouting";
 import { ReactNode } from "react";
-
+import CourseRatingBadge from "../ratings/CourseRatingStar";
 type Props = {
   course: {
     slug: string;
@@ -10,6 +10,7 @@ type Props = {
     lessonsCount: number;
     duration: string;
     rating: number;
+
   };
   children?: ReactNode;
 };
@@ -45,9 +46,7 @@ export default function CourseDetailsHero({ course, children }: Props) {
                     </div>
                 
                     <div className="flex items-center">
-                        <span className="text-gray-400">
-                        <img src="/images/courses/all-courses-star.svg" alt="" className="inline h-4 w-4 ml-3 mr-2" />{course.rating}
-                        </span>
+                        <CourseRatingBadge averageRating={course.rating} />
                     </div>
                 </div>
                 {/*----------  Course details routing /ui component ----------*/}

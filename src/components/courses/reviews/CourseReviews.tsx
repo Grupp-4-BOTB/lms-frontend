@@ -33,7 +33,7 @@ export default function CourseReviews({courseId, studentId,}: CourseReviewProps)
 
   //hämtar all data (reviews) via GET-request med hjälp av kursens id
   const fetchReviews = async () => {
-        const response = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}/reviews`);
+        const response = await fetch(`https://webapp-reviews-richard-dte8c3ddb6bcc4fm.swedencentral-01.azurewebsites.net/api/courses/${courseId}/reviews`);
 
         if (!response.ok) {
         console.error("Failed to fetch reviews.");
@@ -53,6 +53,7 @@ export default function CourseReviews({courseId, studentId,}: CourseReviewProps)
 
 
   //componenten renderar ut reviewForm 
+  //importar reviewList och skickar in reviews
   return (
     <section>
       <ReviewForm
@@ -60,7 +61,6 @@ export default function CourseReviews({courseId, studentId,}: CourseReviewProps)
         studentId={studentId}
         onReviewSubmitted={fetchReviews}
       />
-      //importar reviewList och skickar in reviews
       {isLoading ? (<p>Loading reviews...</p>) : (<ReviewList reviews={reviews} />)}
     </section>
   );
