@@ -4,12 +4,13 @@ import Image from "next/image";
 interface Props {
   name: string;
   role: string;
+  profilePic: string; 
   isChecked: boolean;
   onCheckChange: () => void;
   onDelete: () => void;
 }
 
-export default function Members({ name, role, isChecked, onCheckChange, onDelete }: Props) {
+export default function Members({ name, role, profilePic, isChecked, onCheckChange, onDelete }: Props) {
   return (
     <div className="bg-[var(--background-color)] rounded-[13px] p-5 mb-3 last:mb-0">
       <div className="grid grid-cols-2 w-full">
@@ -24,7 +25,7 @@ export default function Members({ name, role, isChecked, onCheckChange, onDelete
           />
 
                 <Image 
-          src="/defaultprofile.svg" 
+          src={profilePic}
           alt="Profilbild" 
           width={50} 
           height={50} 

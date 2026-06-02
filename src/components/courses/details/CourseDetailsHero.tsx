@@ -10,7 +10,7 @@ type Props = {
     lessonsCount: number;
     duration: string;
     rating: number;
-
+    totalReviews: number;
   };
   children?: ReactNode;
 };
@@ -26,7 +26,6 @@ export default function CourseDetailsHero({ course, children }: Props) {
             <p className="text-gray-800 px-3 text-base font-medium">{course.title}</p>
         </div>
       
-
         <div className="max-w-174 min-h-185 object-cover rounded-2xl bg-[#dfe6ec] gap-4 p-6">
             
             <div className="flex flex-col gap-5">
@@ -46,9 +45,12 @@ export default function CourseDetailsHero({ course, children }: Props) {
                     </div>
                 
                     <div className="flex items-center">
-                        <CourseRatingBadge averageRating={course.rating} />
+                        <span className="text-gray-400">
+                        <img src="/images/courses/all-courses-star.svg" alt="" className="inline h-4 w-4 ml-3 mr-2" />{course.rating} ({course.totalReviews} Reviews) 
+                        </span>
                     </div>
                 </div>
+                
                 {/*----------  Course details routing /ui component ----------*/}
                 <div className="flex items-center">
                     <CourseDetailsRouting slug={course.slug} />
@@ -57,7 +59,6 @@ export default function CourseDetailsHero({ course, children }: Props) {
                 <div>
                     {children}
                 </div>
-            
             </div>
         </div>
     </section>

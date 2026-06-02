@@ -1,16 +1,46 @@
 "use client"
 import React, { useState, useEffect } from 'react'
+import { useParams } from 'next/navigation';
 import Members from '@/components/groupmembers/Members';
 import ProfileRouting from '@/components/ui/ProfileRouting'
 import Image from "next/image";
 
+
 export default function Teams() {
+const params = useParams();           // HÄMTAR  UT ALLA PARAMS
+const groupId = params.id as string; // SKAPAR VARIABELN GROUPID EFTERSOM DEN INTE FUNKADE ANNARS
+
 const [recipientEmail, setRecipientEmail] = useState("");
-const [profilePic, setProfilePic] = useState<string>("/defaultprofile.svg");
+const [errorMessage, setErrorMessage] = useState(""); //FÖR FELMEDDELANDE
+
+
+
+
+
+// PROFILBILD FRÅN EMILS API
+const [profilePics, setProfilePics] = useState<{ id: string; imageUrl: string }[]>([]);
+
+useEffect(() => {
+  fetch("https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net/api/images", { //Ingen databas så kan inte se om detta stämmer (Emils API)
+    headers: { 
+      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string } // SKRIV emils lösen och öägg till under env.local NÄR han fixat det
+  })
+  .then(res => res.ok ? res.json() : null)
+  .then(data => data && setProfilePics(data))
+  .catch(err => console.error("Unable to find profilepicture:", err));
+}, []);
+
+
+
+
+
+
+
+
 
 //Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
 const sendInvite = (email: string) => {
-  fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
+  fetch("https://webapp-backend-emailrequest.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
     headers: {
       "Content-Type": "application/json", 
@@ -18,44 +48,50 @@ const sendInvite = (email: string) => {
     }, 
     body: JSON.stringify({ 
       recipientEmail: email,
+      inviterEmail: "test@inviter.com", 
+      groupId: 123 // HÅRDKODAT TEST-ID: Nu slipper koden krascha på din URL!
     })
   })
-.then(() => setRecipientEmail("")); // RENSAR BORT EMAILEN FRÅN PLACEHOLDERN NÄR DET SKICKATS
+.then(async (res) => {
+    if (!res.ok) {
+      const errorData = await res.json().catch(() => ({}));
+      throw new Error(errorData.error || errorData.message || "This user does not exist.");
+    }
+    setRecipientEmail(""); 
+    setErrorMessage(""); 
+  })
+  .catch((err) => {
+    setErrorMessage(err.message); 
+  });
 };
 
 
 
-
-
-
-
-
 //MOCK FÖR ATT RADERA GROUP - BÖRJAN
-const [members, setMembers] = useState([
+/*const [members, setMembers] = useState([
     { id: '1', name: 'Johan Nilsson', role: 'Student' },
     { id: '2', name: 'Kalle Karlsson', role: 'Student' },
     { id: '3', name: 'Anna Andersson', role: 'Student' },
     { id: '4', name: 'Erik Eriksson', role: 'Teacher' },
-]);
+]);*/
 // ISTÄLLET FÖR MOCK-DELEN OVAN
-//const [members, setMembers] = useState<{ id: string; name: string; role: string }[]>([]);
+const [members, setMembers] = useState<{ id: string; name: string; role: string }[]>([]);
 
 
 
 
-
+//HANTERAR GRUPPMEDLEMMAR i controlelrn TEAMS > och sen actionen GROUPS
 React.useEffect(() => {
-  /*fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/Members/groups/4", {  //ÄNDRA TILL API AZURE WEBAPP 
-    headers: {
+  fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/groups/${groupId}`, {  //ÄNDRA TILL API AZURE WEBAPP 
+  headers: {
       "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
     }
   })
-  .then(res => (res.ok && res.status !== 204 ? res.json() : [])) // LAGT EN TILLFÄLLIG SPÄRR JUST PGA ATT JAG INTE HAR EN DATABAS. DEN BARA HINDRAR SYSTEMET FRÅN ATT KRASCHA DÅ DET EJ FINNS ANVÄNDARE
-  //.then(res => res.json())
+  //.then(res => (res.ok && res.status !== 204 ? res.json() : [])) // LAGT EN TILLFÄLLIG SPÄRR JUST PGA ATT JAG INTE HAR EN DATABAS. DEN BARA HINDRAR SYSTEMET FRÅN ATT KRASCHA DÅ DET EJ FINNS ANVÄNDARE
+  .then(res => res.json()) //dENNA raden istället för den ovan (denna är för just riktig miljlö och inte test-miljö)
   .then(data => setMembers(data))
   .catch(err => console.error("Fel vid hämtning:", err));
-  */
-}, []);
+}, [groupId]);
 // ISTÄLLET FÖR MOCK-DELEN OVAN, AVSLUT
 
 
@@ -79,29 +115,22 @@ React.useEffect(() => {
   }
 
 
-
-
   // RADERAR PERSONEN FRÅN GRUPPEN I DATABASEN PÅ RIKTIGT
-  /*fetch(`https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/Members/${id}`, { //ÄNDRA TILL API AZURE WEBAPP 
+  fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/${id}`, { //DENNA ÄR NU ÄNDRAD TILL KORREKT OCH PEKAR PÅ MIN TEAMS PROJEKT > TILL CONTROLLERS TEAMSCONTROLLER OCH RADERINGSFUNTKIONEN I DEN       
   method: "DELETE",
   headers: {
     "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL 
   }
 })
 .then(res => {
-  if (res.ok) {*/
+  if (res.ok) {
     // Om borttagningen lyckades i databasen ELLER mock, TA BORT ANVÄNDARE FRÅN SKÄRMEN:
     setMembers(prev => prev.filter(m => m.id !== id));
     setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
-    /*}
+    }
   });
-  */
-};
-  // RADERAR PERSONEN FRÅN GRUPPEN I DATABASEN, AVSLUT
-
-
-
-  return (
+  }
+return (
 <>
 
 <div className="font-bold text-[45px] px-4">Team</div>
@@ -139,15 +168,14 @@ React.useEffect(() => {
 
         {/* 1. KNAPP */}
         <button 
-        onClick={() => sendInvite(recipientEmail)} //När vi trycker på send invite, skickas allt över till vår controller i backend
+        onClick={() => sendInvite(recipientEmail)} 
         className="bg-[#ED5735] hover:bg-[#d44828] text-white font-medium py-2 px-6 pl-2 rounded-[11px] whitespace-nowrap cursor-pointer flex items-center gap-2">
          <Image src="/envelopewhite.svg" alt="" width={15} height={15} className="cursor-pointer" />
             Send Invite
         </button>
     </div>
 
-
-        </div>
+{errorMessage && <p className="text-red-500 font-semibold text-sm mt-1">Unable to fetch the email. </p>}        </div>
         </div>
 
 
@@ -190,16 +218,21 @@ React.useEffect(() => {
 
 
 {/* TEAM MEMBERS - ANVÄNDER NU COMPONENTEN */}
-{members.map(member => (
-  <Members 
-    key={member.id}
-    name={member.name}
-    role={member.role}
-    isChecked={selectedIds.includes(member.id)}
-    onCheckChange={() => handleSelectMember(member.id)}
-    onDelete={() => handleDeleteMember(member.id)}
-  />
-))}
+{members.map(member => {
+  const matchedPic = profilePics.find(pic => pic.id === member.id)?.imageUrl || "/defaultprofile.svg";
+
+  return (
+    <Members 
+      key={member.id}
+      name={member.name}
+      role={member.role}
+      profilePic={matchedPic}
+      isChecked={selectedIds.includes(member.id)}
+      onCheckChange={() => handleSelectMember(member.id)}
+      onDelete={() => handleDeleteMember(member.id)}
+    />
+  );
+})}
 {/* END */}
 
 

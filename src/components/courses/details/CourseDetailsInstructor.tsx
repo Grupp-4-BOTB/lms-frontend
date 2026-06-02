@@ -30,16 +30,12 @@ export default async function CourseDetailsInstructor({ slug, course, instructor
         </div>
       </div>
       
-
+      {/* mail, telefon, chat icons
       <div className="flex flex-row items-center gap-2 text-gray-500">
-
-
         <span className="text-sm ">mail</span>
         <span className="text-sm">telefon</span>
         <span className=" text-sm">chat</span>
-
-
-      </div>
+      </div> */}
 
     
       <div className="flex flex-col gap-2">
