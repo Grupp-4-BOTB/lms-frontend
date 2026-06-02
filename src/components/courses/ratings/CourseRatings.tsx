@@ -22,7 +22,7 @@ export default function CourseRating({courseId,}: CourseRatingProps) {
 
   const fetchRatingSummary = async () => {
     const response = await fetch(
-      `${process.env.NEXT_PUBLIC_RATINGS_API_URL}/api/courses/${courseId}/ratings/summary`
+      `https://webapp-ratings-richard-hvatdegdcyfkejda.swedencentral-01.azurewebsites.net/api/courses/${courseId}/ratings/summary`
     );
 
     if (!response.ok) {
