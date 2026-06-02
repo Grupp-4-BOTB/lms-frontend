@@ -1,7 +1,7 @@
 import Image from "next/image";
 import CourseDetailsRouting from "@/components/ui/CourseDetailsRouting";
 import { ReactNode } from "react";
-
+import CourseRatingBadge from "../ratings/CourseRatingStar";
 type Props = {
   course: {
     slug: string;

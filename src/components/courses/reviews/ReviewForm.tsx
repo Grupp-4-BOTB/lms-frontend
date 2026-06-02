@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import Button from "../../ui/Button";
 
 //vad ReviewForm functionen ska få in
 type ReviewFormProps = {
@@ -26,7 +27,7 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
       return;
     }
     //kör en http request till backend, POST, json data, innehållet är studentId och kommentaren
-    const reviewResponse = await fetch( `${process.env.NEXT_PUBLIC_API_URL}/api/courses/${courseId}/reviews`,
+    const reviewResponse = await fetch( `https://webapp-reviews-richard-dte8c3ddb6bcc4fm.swedencentral-01.azurewebsites.net/api/courses/${courseId}/reviews`,
       {
         method: "POST",
         headers: {
@@ -39,20 +40,25 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
       }
     );
 
-    if (!reviewResponse.ok) {
-      alert("Something went wrong when saving review");
+   if (!reviewResponse.ok) {
+      const errorText = await reviewResponse.text();
+
+      console.log(errorText);
+
+      alert(errorText);
+
       return;
     }
     
-    const ratingResponse = await fetch(`${process.env.NEXT_PUBLIC_RATINGS_API_URL}/api/courses/${courseId}/ratings`,
+    const ratingResponse = await fetch(`https://webapp-ratings-richard-hvatdegdcyfkejda.swedencentral-01.azurewebsites.net/api/courses/${courseId}/ratings`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          studentId,
-          stars: rating,
+          studentId: studentId,
+          rating: rating,
         }),
       }
     );
@@ -75,12 +81,12 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
 
       <p className="mt-2 text-sm text-gray-400">Select your rating</p>
 
+        {/*sätter numret för ratingen renderas om och färgar korrekt, om star är mindre än eller samma som rating bli orange*/}
       <div className="mt-4 flex gap-1">
         {[1, 2, 3, 4, 5].map((star) => (
           <button
             key={star}
             type="button"
-            //sätter numret för ratingen renderas om och färgar korrekt, om star är mindre än eller samma som rating bli orange
             onClick={() => setRating(star)}
             className={`text-2xl transition ${star <= rating ? "text-orange-500" : "text-gray-300"
             }`}
@@ -97,9 +103,9 @@ export default function ReviewForm({courseId,studentId, onReviewSubmitted,}: Rev
         className="mt-4 h-32 w-full resize-none rounded-xl bg-gray-100 p-4 text-sm outline-none placeholder:text-gray-400 focus:ring-2 focus:ring-orange-400"
       />
 
-      <button type="button" onClick={handleSubmit} className="mt-4">
-        Submit Review
-      </button>
+      <Button onClick={handleSubmit} className="mt-4 flex items-center gap-3" variant="orange" size="sm" buttonStyle="default">
+          Submit
+      </Button>
     </div>
   );
 }

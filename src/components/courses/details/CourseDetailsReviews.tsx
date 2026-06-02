@@ -5,19 +5,19 @@ import CourseReviews from "@/components/courses/reviews/CourseReviews";
 
 type Props = {
   course: {
-    studentId: number;
+    id: number;
   };
 };
 
 export default function CourseDetailsReviews({ course }: Props) {
-  const studentId = course.studentId
+  const studentId = 2; // temporärt lägg till studentId från gabriels kod
 
   return (
     <div className="flex flex-col gap-6">
-      <CourseRating courseId={course.studentId} />
+      <CourseRating courseId={course.id} />
 
       <CourseReviews
-        courseId={course.studentId}
+        courseId={course.id}
         studentId={studentId}
       />
     </div>
