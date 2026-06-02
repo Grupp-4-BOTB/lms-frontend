@@ -5,9 +5,11 @@ import { useState, useRef } from "react";
 interface ProfileCardProps {
     photoUrl: string | null;
     onPhotoChange: (url: string) => void;
+    firstName: string;
+    lastName: string;
 }
 
-export default function ProfileCard({ photoUrl, onPhotoChange }: ProfileCardProps) {
+export default function ProfileCard({ photoUrl, onPhotoChange, firstName, lastName }: ProfileCardProps) {
     const fileInputRef = useRef<HTMLInputElement>(null);
 
     function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -35,7 +37,7 @@ export default function ProfileCard({ photoUrl, onPhotoChange }: ProfileCardProp
             </button>
             <input ref={fileInputRef} type="file" accept="image/*" style={{ display: "none" }} onChange={handlePhotoChange} />
             </div>
-            <h2 className="text-primary text-lg font-bold">Hasan Mahmud</h2>
+            <h2 className="text-primary text-lg font-bold">{firstName || lastName ? `${firstName} ${lastName}` : "Your Name"}</h2>
             <span className="py-1 px-4 bg-orange-100 rounded-full text-orange-600 text-xs">Student</span>
         </div>
     );
