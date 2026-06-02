@@ -5,6 +5,16 @@ import Image from "next/image";
 import GoogleButton from "@/components/ui/GoogleButton";
 
 import Button from "@/components/ui/Button";
+import { jwtDecode } from "jwt-decode";
+
+
+export class userModel{
+  nameid: string = "";
+  email: string = "";
+  firstName: string = "";
+  lastName: string = "";
+}
+ 
 
 export default function LoginPage() {
   // // Sparar det som användaren skriver i e-postfältet
@@ -130,10 +140,13 @@ export default function LoginPage() {
         // Vi sparar vår JWT-token och användarinfo lokalt i webbläsaren
         // Det gör att appen kommer ihåg att vi är inloggade även om vi laddar om sidan!
         localStorage.setItem("accessToken", actualToken);
-        localStorage.setItem("userEmail", email);
-        localStorage.setItem("userName", actualName);
-        localStorage.setItem("userId", actualUserId.toString());
+        const decoded = jwtDecode<userModel>(actualToken);
+        localStorage.setItem("userEmail", decoded.email);
+        localStorage.setItem("userName", decoded.firstName);
+        localStorage.setItem("userId", decoded.nameid);
+        localStorage.setItem("userLastname", decoded.lastName);
 
+         
 
         // Sparar unikt userId i webbläsaren så att kollegor (Emil & Ivona)
         // kan hämta upp det i sina mikrokomponenter via localStorage.getItem("userId")
