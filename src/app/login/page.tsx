@@ -180,13 +180,10 @@ export default function LoginPage() {
               <p className="text-gray-500 mb-8">
                 Please log in to your account to continue.
               </p>
-
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Email address
               </label>
-
               {/* Denna div blir den nya ramen runt både ikon och input */}
-
               <div className="relative w-full">
                 {/* 1. Ikonen läggs "ovanpå" fältet till vänster */}
                 <div className="absolute inset-y-0 left-0 flex items-center mb-5 pl-3 pointer-events-none">
@@ -208,9 +205,9 @@ export default function LoginPage() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
-
               <div className="flex justify-end mt-2">
-                <button
+                {/*}
+               <button
                   type="button"
                   className="text-xs text-orange-500  underline decoration-orange-500  hover:underline font-medium cursor-pointer"
                   onClick={() =>
@@ -219,10 +216,9 @@ export default function LoginPage() {
                     )
                   }
                 >
-                  Forgot your email address?
-                </button>
+                  * Forgot your email address? *
+                </button>     */}
               </div>
-
               <div className="w-full py-4">
                 <button
                   type="submit"
@@ -232,23 +228,22 @@ export default function LoginPage() {
                   {loading ? "Checking..." : "Continue"}
                 </button>
               </div>
-
               {/* ─── HÄR LÄGGER DU IN LINJEN OCH GOOGLE-KNAPPEN ─── */}
-              <div className="w-full text-center my-2">
-                {/* Själva linjen med texten "or continue with" */}
-                <div className="relative flex py-4 items-center justify-center">
+              {/* <div className="w-full text-center my-2">   */}
+              {/* Själva linjen med texten "or continue with" */}
+              {/*  <div className="relative flex py-4 items-center justify-center">
                   <div className="flex-grow border-t border-gray-200"></div>
                   <span className="flex-shrink mx-4 text-xs text-gray-400 uppercase tracking-wider">
                     or continue with
                   </span>
                   <div className="flex-grow border-t border-gray-200"></div>
-                </div>
+                </div>   /*}
 
                 {/* Google-knappen placeras direkt under linjen */}
-                <div className="mt-8 [&_button]:cursor-pointer">
+              {/*     <div className="mt-8 [&_button]:cursor-pointer">
                   <GoogleButton />
                 </div>
-              </div>
+              </div>   */}
             </form>
           ) : (
             <form onSubmit={handleLogin}>
