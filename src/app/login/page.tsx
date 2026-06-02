@@ -119,9 +119,11 @@ export default function LoginPage() {
           data.fullName ||
           "User";
 
-        // Extrahera unikt userId (GUID) från C#-backend responsen
-        // Vi kollar om ID:t ligger i data.userId, data.id eller data.Id
-        const actualUserId = data.userId || data.id || data.Id || "";
+          const actualUserId =
+            data.id ||
+            data.userId ||
+            data.studentId ||
+            data.nameid;
 
         // SPARAR INFO I WEBBLÄSAREN SÅ VI KAN VISA VEM SOM ÄR INLOGGAD!
         // LOCAL STORAGE (SPARA SESSIONEN)

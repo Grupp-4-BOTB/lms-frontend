@@ -9,14 +9,14 @@ import ReviewList from "./ReviewList";
 //vad courseReviews behöver få in från courseDetails sidan
 type CourseReviewProps = {
   courseId: number;
-  studentId: number;
+  studentId: string;
 };
 
 //hur en review kommer se ut när den kommer från backend
 export type Review = {
   id: number;
   courseId: number;
-  studentId: number;
+  studentId: string;
   comment: string;
   createdAt: string;
 };

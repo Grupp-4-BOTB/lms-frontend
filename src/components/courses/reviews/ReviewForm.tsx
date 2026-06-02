@@ -6,7 +6,7 @@ import Button from "../../ui/Button";
 //vad ReviewForm functionen ska få in
 type ReviewFormProps = {
   courseId: number;
-  studentId: number;
+  studentId: string;
   onReviewSubmitted: () => Promise<void>;
 };
 
