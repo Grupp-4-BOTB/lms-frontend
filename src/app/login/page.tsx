@@ -122,7 +122,7 @@ export default function LoginPage() {
             data.id ||
             data.userId ||
             data.studentId ||
-            data.UserId;
+            data.nameid;
 
         // SPARAR INFO I WEBBLÄSAREN SÅ VI KAN VISA VEM SOM ÄR INLOGGAD!
         // LOCAL STORAGE (SPARA SESSIONEN)
