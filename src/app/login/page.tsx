@@ -110,6 +110,7 @@ export default function LoginPage() {
         // Den här raden kollar om token ligger i data.token, data.accessToken eller data.tokenString
         const actualToken =
           data.token || data.accessToken || data.tokenString || data;
+
         const actualName =
           data.firstName ||
           data.name ||
@@ -118,6 +119,10 @@ export default function LoginPage() {
           data.fullName ||
           "User";
 
+        // Extrahera unikt userId (GUID) från C#-backend responsen
+        // Vi kollar om ID:t ligger i data.userId, data.id eller data.Id
+        const actualUserId = data.userId || data.id || data.Id || "";
+
         // SPARAR INFO I WEBBLÄSAREN SÅ VI KAN VISA VEM SOM ÄR INLOGGAD!
         // LOCAL STORAGE (SPARA SESSIONEN)
         // Vi sparar vår JWT-token och användarinfo lokalt i webbläsaren
@@ -125,6 +130,10 @@ export default function LoginPage() {
         localStorage.setItem("accessToken", actualToken);
         localStorage.setItem("userEmail", email);
         localStorage.setItem("userName", actualName);
+
+        // Sparar unikt userId i webbläsaren så att kollegor (Emil & Ivona)
+        // kan hämta upp det i sina mikrokomponenter via localStorage.getItem("userId")
+        localStorage.setItem("userId", actualUserId);
 
         alert(`Welcome back! Logged in as: ${email}`);
 
