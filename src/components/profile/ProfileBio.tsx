@@ -14,7 +14,7 @@ interface ProfileBioProps {
 export default function ProfileBio({ photoUrl, onPhotoChange, firstName, lastName, description }: ProfileBioProps) {
 
     return (
-        <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] h-[715px] justify-start ">
+        <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] justify-start">
             <ProfileCard 
             photoUrl={photoUrl} 
             onPhotoChange={onPhotoChange}

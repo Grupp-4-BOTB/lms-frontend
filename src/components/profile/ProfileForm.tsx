@@ -150,10 +150,7 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
                 <textarea 
                 id="description" 
                 value={description} 
-                placeholder="A passionate UI/UX Designer with hands-on experience designing intuitive, user-centered digital products across mobile and web platforms. With a strong foundation in user research, wireframing, prototyping, and visual design, 
-                he instructor focuses on creating experiences that are not only visually appealing but also solve real user problems. 
-                Having worked on projects in fintech, healthcare, travel, real estate, and SaaS, the instructor brings real-world insights 
-                into the classroom bridging the gap between theory and industry practice." 
+                placeholder="Tell us about yourself..." 
                 onChange={(e) => setDescription(e.target.value)} 
                 className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm outline-none focus:border-orange-500 resize-none w-full h-[150px]" />
             </div>
