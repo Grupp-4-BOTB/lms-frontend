@@ -43,11 +43,11 @@ export default function ProfileCard({ photoUrl, onPhotoChange, firstName, lastNa
             </div>
             <div className="relative -mt-13">
                 <div className="w-23 h-23 rounded-full bg-white border-4 border-white flex items-center justify-center overflow-hidden">
-                    {photoUrl ? (
-                    <img src={photoUrl} alt="" className="w-full h-full object-cover" />
-                    ) : (
-                    <img src="/profile3-icon.svg" alt="Placeholder" className="w-full h-full" />
-                    )}
+                    <img 
+                        src={photoUrl ?? "https://shikostorage254.blob.core.windows.net/images/profile3-icon.svg"} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover" 
+                    />
                 </div>
             </div>
             <h2 className="text-primary text-lg font-bold">{firstName || lastName ? `${firstName} ${lastName}` : "Your Name"}</h2>
