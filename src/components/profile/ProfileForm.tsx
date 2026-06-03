@@ -28,26 +28,24 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
 
 
     async function handlePhotoChange(event: React.ChangeEvent<HTMLInputElement>) {
-        const file = event.target.files?.[0];
-        if (file) {
-            const url = URL.createObjectURL(file);
-            onPhotoChange(url);
+    const file = event.target.files?.[0];
+    if (file) {
+        const formData = new FormData();
+        formData.append("file", file);
+        formData.append("ownerId", "test-user");
 
-            const formData = new FormData();
-            formData.append("file", file);
-            formData.append("ownerId", "test-user");
-
-            const response = await fetch(
-                `https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net/api/images/upload`,
-                {
-                    method: "POST",
-                    body: formData,
-                }
-            );
-            const data =await response.json();
-            console.log("Upload image URL:", data.url);
-        }
+        const response = await fetch(
+            `https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net/api/images/upload`,
+            {
+                method: "POST",
+                body: formData,
+            }
+        );
+        const data = await response.json();
+        onPhotoChange(data.url);
+        console.log("Upload image URL:", data.url);
     }
+}
 
     async function handleSave() {
         const response = await fetch(
@@ -98,7 +96,11 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
         <div className="flex flex-col gap-4 p-6 m-3 bg-white rounded-xl w-[1000px] h-[650px]">
             <div className="flex items-center gap-8">
                 <div className="w-16 h-16 rounded-xl bg-white border border-gray-200 flex items-center justify-center overflow-hidden">
-                    {photoUrl ? (<img src={photoUrl} alt="" className="w-full h-full object-cover" />) : <img src="/profile3-icon.svg" alt="Placeholder" className="text-gray-400 text-xs" />}
+                    <img 
+                        src={photoUrl ?? "https://shikostorage254.blob.core.windows.net/images/profile3-icon.svg"} 
+                        alt="Profile" 
+                        className="w-full h-full object-cover" 
+                    />
                 </div>
 
                 <button className="rounded-lg px-4 py-2 border border-gray-300 hover:bg-gray-300 text-sm" onClick={() => fileInputRef.current?.click()}>
