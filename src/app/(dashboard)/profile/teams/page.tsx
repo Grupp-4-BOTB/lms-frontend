@@ -1,4 +1,3 @@
-
 "use client"
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation';
@@ -11,6 +10,31 @@ const params = useParams();           // HÄMTAR  UT ALLA PARAMS
 const groupId = params.id as string; // SKAPAR VARIABELN GROUPID EFTERSOM DEN INTE FUNKADE ANNARS
 const [recipientEmail, setRecipientEmail] = useState("");
 const [errorMessage, setErrorMessage] = useState(""); //FÖR FELMEDDELANDE
+const [members, setMembers] = useState<{ id: string; name: string; role: string; profilePic: string }[]>([]);
+const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+
+
+
+
+// MIN BACKENDTEAMS > MEMBERSCONTROLLER > [GROUPS]
+  useEffect(() => {
+    if (!groupId) return;
+
+    fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/groups/${groupId}`, { 
+      headers: {
+        "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string 
+      }
+    })
+    .then(res => {
+      if (!res.ok) {
+        throw new Error("Unable to fetch members. Database might be down or the group doesn't exist.");
+      }
+      return res.json();
+    })
+    .then(data => setMembers(data))
+    .catch(err => console.error("Error when trying to fetch members. Network error or server unreachable:", err));
+  }, [groupId]);
 
 
 
@@ -19,21 +43,17 @@ const [errorMessage, setErrorMessage] = useState(""); //FÖR FELMEDDELANDE
 
 
 
-
-//Brevbäraren som skickar iväg datan - I DETTA FALLET MAILET SOM SKRIVS I PLACEHOLDERN - till din backend
-// DENNA FUNKAR NU **
+// MIN EGEN BACKEND - BACKENDEMAILREQUEST 
 const sendInvite = (email: string) => {
   // FIXAD URL:
   fetch("https://webapp-backend-emailrequest-hcdcgva6baawcheb.polandcentral-01.azurewebsites.net/api/emailrequest/emailinvite", { 
     method: "POST", 
     headers: {
       "Content-Type": "application/json", 
-      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string 
+      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL
     }, 
     body: JSON.stringify({ 
-      recipientEmail: email,
-      inviterEmail: "test@inviter.com", 
-      groupId: 123 
+  recipientEmail: email 
     })
   })
   .then(async (res) => {
@@ -53,35 +73,20 @@ const sendInvite = (email: string) => {
 
 
 
-//MOCK FÖR ATT RADERA GROUP - BÖRJAN
+//MOCK FÖR ATT RADERA GROUP - HÅRDKODAT
 /*const [members, setMembers] = useState([
     { id: '1', name: 'Johan Nilsson', role: 'Student' },
     { id: '2', name: 'Kalle Karlsson', role: 'Student' },
     { id: '3', name: 'Anna Andersson', role: 'Student' },
     { id: '4', name: 'Erik Eriksson', role: 'Teacher' },
 ]);*/
-// ISTÄLLET FÖR MOCK-DELEN OVAN
-const [members, setMembers] = useState<{ id: string; name: string; role: string }[]>([]);
 
 
 
-//HANTERAR GRUPPMEDLEMMAR i controlelrn TEAMS > och sen actionen GROUPS
-React.useEffect(() => {
-  fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/groups/${groupId}`, {  //ÄNDRA TILL API AZURE WEBAPP 
-  headers: {
-      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
-    }
-  })
-  //.then(res => (res.ok && res.status !== 204 ? res.json() : [])) // LAGT EN TILLFÄLLIG SPÄRR JUST PGA ATT JAG INTE HAR EN DATABAS. DEN BARA HINDRAR SYSTEMET FRÅN ATT KRASCHA DÅ DET EJ FINNS ANVÄNDARE
-  .then(res => res.json()) //dENNA raden istället för den ovan (denna är för just riktig miljlö och inte test-miljö)
-  .then(data => setMembers(data))
-  .catch(err => console.error("Fel vid hämtning:", err));
-}, [groupId]);
-// ISTÄLLET FÖR MOCK-DELEN OVAN, AVSLUT
+
 
 
 // Statet som håller koll på vilka ID:n som är ikryssade
-  const [selectedIds, setSelectedIds] = useState<string[]>([]);
   // 2. Logik för att kryssa i/ur en person
   const handleSelectMember = (id: string) => {
     setSelectedIds(prev => 
@@ -96,21 +101,33 @@ React.useEffect(() => {
     return;
   }
 
-  // RADERAR PERSONEN FRÅN GRUPPEN I DATABASEN PÅ RIKTIGT
-  fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/${id}`, { //DENNA ÄR NU ÄNDRAD TILL KORREKT OCH PEKAR PÅ MIN TEAMS PROJEKT > TILL CONTROLLERS TEAMSCONTROLLER OCH RADERINGSFUNTKIONEN I DEN       
-  method: "DELETE",
-  headers: {
-    "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL 
-  }
-})
-.then(res => {
-  if (res.ok) {
-    // Om borttagningen lyckades i databasen ELLER mock, TA BORT ANVÄNDARE FRÅN SKÄRMEN:
-    setMembers(prev => prev.filter(m => m.id !== id));
-    setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
+
+  // ANROP TILL MIN EGEN BACKEND FÖR ATT RADERA MEDLEM (MembersController -> DeleteMember)
+  fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/${id}`, { 
+    method: "DELETE",
+    headers: {
+      "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string 
     }
-  });
-  }
+  })
+  .then(res => {
+    if (res.ok) {
+      // Ta bort användaren från skärmen om det lyckades i databasen
+      setMembers(prev => prev.filter(m => m.id !== id));
+      setSelectedIds(prev => prev.filter(selectedId => selectedId !== id));
+    }
+  })
+  .catch(err => console.error("Error when trying to delete member:", err));
+};
+// AVSLUTAR ANROP FÖR DELETE MEMBER
+
+
+
+
+
+
+
+
+
 return (
 <>
 <div className="font-bold text-[45px] px-4">Team</div>
@@ -191,7 +208,7 @@ return (
       key={member.id}
       name={member.name}
       role={member.role}
-      profilePic="/defaultprofile.svg"
+      profilePic={member.profilePic || "/defaultprofile.svg"} // LAGT TILL ATT OM NY PROFILBILD INTE FINNS (ProfilePic), SÅ HAR MAN DEN HÅRDKODADE ATT FALLA TILLBAKA PÅ (/defaultprofile.svg). SAMMA SAK I BACKEND
       isChecked={selectedIds.includes(member.id)}
       onCheckChange={() => handleSelectMember(member.id)}
       onDelete={() => handleDeleteMember(member.id)}

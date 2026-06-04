@@ -26,7 +26,7 @@ export default function Members({ name, role, profilePic, isChecked, onCheckChan
 
                 <Image 
           src={profilePic}
-          alt="Profilbild" 
+          alt="Profile picture of a member" 
           width={50} 
           height={50} 
           className="rounded-full object-cover" 
