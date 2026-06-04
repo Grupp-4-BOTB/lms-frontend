@@ -132,7 +132,6 @@ export default function LoginPage() {
         localStorage.setItem("userName", actualName);
         localStorage.setItem("userId", actualUserId.toString());
 
-
         // Sparar unikt userId i webbläsaren så att kollegor (Emil & Ivona)
         // kan hämta upp det i sina mikrokomponenter via localStorage.getItem("userId")
         localStorage.setItem("userId", actualUserId);
@@ -240,21 +239,21 @@ export default function LoginPage() {
                 </button>
               </div>
               {/* ─── HÄR LÄGGER DU IN LINJEN OCH GOOGLE-KNAPPEN ─── */}
-              {/* <div className="w-full text-center my-2">   */}
-              {/* Själva linjen med texten "or continue with" */}
-              {/*  <div className="relative flex py-4 items-center justify-center">
+              <div className="w-full text-center my-2">
+                {/* Själva linjen med texten "or continue with" */}
+                <div className="relative flex py-4 items-center justify-center">
                   <div className="flex-grow border-t border-gray-200"></div>
                   <span className="flex-shrink mx-4 text-xs text-gray-400 uppercase tracking-wider">
                     or continue with
                   </span>
                   <div className="flex-grow border-t border-gray-200"></div>
-                </div>   /*}
+                </div>
 
                 {/* Google-knappen placeras direkt under linjen */}
-              {/*     <div className="mt-8 [&_button]:cursor-pointer">
+                <div className="mt-8 [&_button]:cursor-pointer">
                   <GoogleButton />
                 </div>
-              </div>   */}
+              </div>
             </form>
           ) : (
             <form onSubmit={handleLogin}>
