@@ -2,12 +2,31 @@
 
 import ProfileForm from "@/components/profile/ProfileForm";
 import ProfileBio from "@/components/profile/ProfileBio";
-import ProfileCard from "@/components/profile/ProfileCard";
 import ProfileRouting from "@/components/ui/ProfileRouting";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function ProfilePage() {
     const [photoUrl, setPhotoUrl] = useState<string | null>(null);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [description, setDescription] = useState("");
+
+    useEffect(() => {
+        async function fetchProfile() {
+            const response = await fetch (
+                `https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net/api/profiles/test-user`
+            );
+            if (response.ok) {
+                const data = await response.json();
+                setFirstName(data.firstName ?? "");
+                setLastName(data.lastName ?? "");
+                setDescription(data.description ?? "");
+                setPhotoUrl(data.photoUrl ?? null);
+            }
+        }
+    fetchProfile();
+    }, []);
+
 
     return (
         <div className="flex flex-col ">
@@ -19,8 +38,27 @@ export default function ProfilePage() {
 
             <div className="flex gap-4">
                 
-                <ProfileBio photoUrl={photoUrl} onPhotoChange={setPhotoUrl} />
-                <ProfileForm photoUrl={photoUrl} onPhotoChange={setPhotoUrl} />
+                <ProfileBio 
+                    photoUrl={photoUrl} 
+                    onPhotoChange={setPhotoUrl}
+                    firstName={firstName}
+                    lastName={lastName}
+                    description={description} 
+                />
+                <ProfileForm 
+                    photoUrl={photoUrl}
+                    onPhotoChange={setPhotoUrl}
+                    initialFirstName={firstName}
+                    initialLastName={lastName}
+                    initialDescription={description}
+                    onSaved={(data) => {
+                        setFirstName(data.firstName);
+                        setLastName(data.lastName);
+                        setDescription(data.description);
+                        setPhotoUrl(data.photoUrl);
+                        window.location.reload();
+                    }}
+                />
             </div>
         </div>
     );
