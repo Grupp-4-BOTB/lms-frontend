@@ -24,9 +24,13 @@ export default function CourseDetailsReviews({ course }: Props) {
   }, []);
 
   if (!studentId) {
-    <CourseRating courseId={course.id} />
-    return <p>Please login to write a review.</p>;
-  }
+  return (
+    <>
+      <CourseRating courseId={course.id} />
+      <p>Please login to write a review.</p>
+    </>
+  );
+}
   
   return (
     <div className="flex flex-col gap-6">
