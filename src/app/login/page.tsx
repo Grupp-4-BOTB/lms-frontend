@@ -7,14 +7,12 @@ import GoogleButton from "@/components/ui/GoogleButton";
 import Button from "@/components/ui/Button";
 import { jwtDecode } from "jwt-decode";
 
-
-export class userModel{
+export class userModel {
   nameid: string = "";
   email: string = "";
   FirstName: string = "";
   LastName: string = "";
 }
- 
 
 export default function LoginPage() {
   // // Sparar det som användaren skriver i e-postfältet
@@ -120,7 +118,6 @@ export default function LoginPage() {
         // Den här raden kollar om token ligger i data.token, data.accessToken eller data.tokenString
         const actualToken =
           data.token || data.accessToken || data.tokenString || data;
-         
 
         // SPARAR INFO I WEBBLÄSAREN SÅ VI KAN VISA VEM SOM ÄR INLOGGAD!
         // LOCAL STORAGE (SPARA SESSIONEN)
@@ -132,10 +129,6 @@ export default function LoginPage() {
         localStorage.setItem("userName", decoded.FirstName);
         localStorage.setItem("userId", decoded.nameid);
         localStorage.setItem("userLastname", decoded.LastName);
-
-         
-
-       
 
         alert(`Welcome back! Logged in as: ${email}`);
 
@@ -240,21 +233,21 @@ export default function LoginPage() {
                 </button>
               </div>
               {/* ─── HÄR LÄGGER DU IN LINJEN OCH GOOGLE-KNAPPEN ─── */}
-              {/* <div className="w-full text-center my-2">   */}
-              {/* Själva linjen med texten "or continue with" */}
-              {/*  <div className="relative flex py-4 items-center justify-center">
+              <div className="w-full text-center my-2">
+                {/* Själva linjen med texten "or continue with" */}
+                <div className="relative flex py-4 items-center justify-center">
                   <div className="flex-grow border-t border-gray-200"></div>
                   <span className="flex-shrink mx-4 text-xs text-gray-400 uppercase tracking-wider">
                     or continue with
                   </span>
                   <div className="flex-grow border-t border-gray-200"></div>
-                </div>   /*}
+                </div>
 
                 {/* Google-knappen placeras direkt under linjen */}
-              {/*     <div className="mt-8 [&_button]:cursor-pointer">
+                <div className="mt-8 [&_button]:cursor-pointer">
                   <GoogleButton />
                 </div>
-              </div>   */}
+              </div>
             </form>
           ) : (
             <form onSubmit={handleLogin}>
