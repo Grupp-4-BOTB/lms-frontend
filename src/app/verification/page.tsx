@@ -85,20 +85,27 @@ function VerificationCodeContent() {
 
 
 
-  ///////////////// HANDLE-VERIFY //////////////////
-  // skickar in koden som användaren har skrivit in på hemsidan, för att kontrollera om den är rätt eller fel
+ // MIN BACKEND > BACKENDVERIFICATIONCODE 
   const handleVerify = async () => {
     if (isExpired) return;
-    await fetch("https://webapp-backend-verificationCode.azurewebsites.net/api/verificationcode/verify", {
+    const response = await fetch("https://webapp-backend-verificationCode.azurewebsites.net/api/verificationcode/verify", {
       method: "POST",
       headers: {
       "Content-Type": "application/json", //förklarar om det är en jsonfil, text, bild etc. Vilken typ av format det som skickas är. 
       "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
     },
-      body: JSON.stringify({ email: email, Code: code })              // TILLAGD FÖR EMAIL FÖR GABRIEL
+      body: JSON.stringify({ email: email, code: code })              // TILLAGD FÖR EMAIL FÖR GABRIEL
     });
+
+
+    // OM ANVÄNDAREN SKRIVER IN RÄTT KOD SÅ SKICKAS ANVÄNDAREN TILL COURSES SIDAN
+  if (response.ok) {
+    window.location.href = "/courses";
+  } else {
+    alert("Fel kod, försök igen!"); // oM KODEN BLIR FEL
+  }
   };
-   // SKICKAR KODEN TILL MITT API, AVSLUT
+
   
   
 
@@ -188,7 +195,7 @@ function VerificationCodeContent() {
 
 export default function VerificationCodePage() {
   return (
-    <Suspense fallback={<div>Laddar...</div>}>
+    <Suspense fallback={<div> </div>}>
       <VerificationCodeContent />
     </Suspense>
   );
