@@ -1,4 +1,3 @@
-
 "use client"
 import React, { useState, useEffect } from 'react'
 import { useParams } from 'next/navigation';
@@ -11,15 +10,14 @@ const params = useParams();           // HÄMTAR  UT ALLA PARAMS
 const groupId = params.id as string; // SKAPAR VARIABELN GROUPID EFTERSOM DEN INTE FUNKADE ANNARS
 const [recipientEmail, setRecipientEmail] = useState("");
 const [errorMessage, setErrorMessage] = useState(""); //FÖR FELMEDDELANDE
-
-const [members, setMembers] = useState<{ id: string; name: string; role: string }[]>([]);
+const [members, setMembers] = useState<{ id: string; name: string; role: string; profilePic: string }[]>([]);
 const [selectedIds, setSelectedIds] = useState<string[]>([]);
 
 
 
 
 
-
+// MIN BACKENDTEAMS > MEMBERSCONTROLLER > [GROUPS]
   useEffect(() => {
     if (!groupId) return;
 
@@ -30,12 +28,12 @@ const [selectedIds, setSelectedIds] = useState<string[]>([]);
     })
     .then(res => {
       if (!res.ok) {
-        throw new Error("Kunde inte hämta medlemmar från databasen.");
+        throw new Error("Unable to fetch members. Database might be down or the group doesn't exist.");
       }
       return res.json();
     })
     .then(data => setMembers(data))
-    .catch(err => console.error("Fel vid hämtning av riktiga medlemmar:", err));
+    .catch(err => console.error("Error when trying to fetch members. Network error or server unreachable:", err));
   }, [groupId]);
 
 
@@ -55,9 +53,7 @@ const sendInvite = (email: string) => {
       "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string //NYCKEL
     }, 
     body: JSON.stringify({ 
-      recipientEmail: email,
-      inviterEmail: "test@inviter.com", 
-      groupId: 123 
+  recipientEmail: email 
     })
   })
   .then(async (res) => {
@@ -77,14 +73,13 @@ const sendInvite = (email: string) => {
 
 
 
-//MOCK FÖR ATT RADERA GROUP - BÖRJAN
+//MOCK FÖR ATT RADERA GROUP - HÅRDKODAT
 /*const [members, setMembers] = useState([
     { id: '1', name: 'Johan Nilsson', role: 'Student' },
     { id: '2', name: 'Kalle Karlsson', role: 'Student' },
     { id: '3', name: 'Anna Andersson', role: 'Student' },
     { id: '4', name: 'Erik Eriksson', role: 'Teacher' },
 ]);*/
-// ISTÄLLET FÖR MOCK-DELEN OVAN
 
 
 
@@ -108,8 +103,6 @@ const sendInvite = (email: string) => {
 
 
   // ANROP TILL MIN EGEN BACKEND FÖR ATT RADERA MEDLEM (MembersController -> DeleteMember)
-  //Insåg att vi ju endast ska andvända dessa till att koppla till våra EGNA backends, inte kollegornas. 
-  // Och kollegornas kopplar vi till i backend. Därav har jag nu ändrat så den endast kopplar till MIN backend där jag sen anropar dom andras API.
   fetch(`https://webapp-backend-teams.azurewebsites.net/api/members/${id}`, { 
     method: "DELETE",
     headers: {
@@ -215,7 +208,7 @@ return (
       key={member.id}
       name={member.name}
       role={member.role}
-      profilePic="/defaultprofile.svg"
+      profilePic={member.profilePic || "/defaultprofile.svg"} // LAGT TILL ATT OM NY PROFILBILD INTE FINNS (ProfilePic), SÅ HAR MAN DEN HÅRDKODADE ATT FALLA TILLBAKA PÅ (/defaultprofile.svg). SAMMA SAK I BACKEND
       isChecked={selectedIds.includes(member.id)}
       onCheckChange={() => handleSelectMember(member.id)}
       onDelete={() => handleDeleteMember(member.id)}
