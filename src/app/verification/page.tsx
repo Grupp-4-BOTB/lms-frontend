@@ -38,7 +38,7 @@ function VerificationCodeContent() {
       "Content-Type": "application/json", //förklarar om det är en jsonfil, text, bild etc. Vilken typ av format det som skickas är. 
       "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
     },
-    body: JSON.stringify({ Email: email })                          // TILLAGD FÖR EMAIL FÖR GABRIEL
+    body: JSON.stringify({ email: email })                          // TILLAGD FÖR EMAIL FÖR GABRIEL
       });
     } catch (error) {
       console.error("Unable to send new code:", error);
@@ -95,7 +95,7 @@ function VerificationCodeContent() {
       "Content-Type": "application/json", //förklarar om det är en jsonfil, text, bild etc. Vilken typ av format det som skickas är. 
       "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string // NYCKEL för min backend, så att anropet faktiskt kommer igenom
     },
-      body: JSON.stringify({ Email: email, Code: code })              // TILLAGD FÖR EMAIL FÖR GABRIEL
+      body: JSON.stringify({ email: email, Code: code })              // TILLAGD FÖR EMAIL FÖR GABRIEL
     });
   };
    // SKICKAR KODEN TILL MITT API, AVSLUT
