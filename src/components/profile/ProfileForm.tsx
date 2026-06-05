@@ -19,7 +19,7 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
     const [firstName, setFirstName] = useState(initialFirstName);
     const [lastName, setLastName] = useState(initialLastName);
     const [description, setDescription] = useState(initialDescription);
-    const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
+    const API_KEY = "Test123!";
     const PHOTO_SERVICE_URL = "https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net";
     const PROFILE_SERVICE_URL = "https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net";
 
