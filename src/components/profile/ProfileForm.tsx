@@ -19,6 +19,9 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
     const [firstName, setFirstName] = useState(initialFirstName);
     const [lastName, setLastName] = useState(initialLastName);
     const [description, setDescription] = useState(initialDescription);
+    const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
+    const PHOTO_SERVICE_URL = "https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net";
+    const PROFILE_SERVICE_URL = "https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net";
 
     useEffect(() => {
         setFirstName(initialFirstName);
@@ -35,9 +38,12 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
         formData.append("ownerId", "test-user");
 
         const response = await fetch(
-            `https://webapp-photoservice-emil-b7h6anhxdsamgzfx.germanywestcentral-01.azurewebsites.net/api/images/upload`,
+            `${PHOTO_SERVICE_URL}/api/images/upload`,
             {
                 method: "POST",
+                headers: {
+                    "X-API-Key": API_KEY
+                },
                 body: formData,
             }
         );
@@ -49,10 +55,12 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
 
     async function handleSave() {
         const response = await fetch(
-            `https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net/api/profiles/test-user/update`,
+            `${PROFILE_SERVICE_URL}/api/profiles/test-user/update`,
             {
                method: "PUT",
-               headers: {"Content-Type" : "application/json"},
+               headers: {
+                    "Content-Type" : "application/json",
+                    "X-API-Key": API_KEY},
                body: JSON.stringify({
                 ownerId: "test-user",
                 firstName: firstName,
@@ -69,10 +77,13 @@ export default function ProfileForm({ photoUrl, onPhotoChange, initialFirstName,
         onSaved({ firstName, lastName, description, photoUrl });
     } else if (response.status === 404) {
         const createResponse = await fetch(
-            `https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net/api/profiles`,
+            `${PROFILE_SERVICE_URL}/api/profiles`,
             {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: { 
+                    "Content-Type": "application/json",
+                    "X-API-Key": API_KEY
+                },
                 body: JSON.stringify({
                     ownerId: "test-user",
                     firstName,
