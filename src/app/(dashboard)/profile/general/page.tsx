@@ -10,11 +10,18 @@ export default function ProfilePage() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [description, setDescription] = useState("");
+    const API_KEY = "Test123!"; //I en vanlig app skulle denna inte vara hårdkodad utan hämtas på ett säkert sätt, t.ex. från en miljövariabel(.env)
+    const PROFILE_SERVICE_URL = "https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net";
 
     useEffect(() => {
         async function fetchProfile() {
             const response = await fetch (
-                `https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net/api/profiles/test-user`
+                `${PROFILE_SERVICE_URL}/api/profiles/test-user`,
+                {
+                    headers: {
+                        "X-API-Key": API_KEY
+                    }
+                }
             );
             if (response.ok) {
                 const data = await response.json();
@@ -40,7 +47,6 @@ export default function ProfilePage() {
                 
                 <ProfileBio 
                     photoUrl={photoUrl} 
-                    onPhotoChange={setPhotoUrl}
                     firstName={firstName}
                     lastName={lastName}
                     description={description} 

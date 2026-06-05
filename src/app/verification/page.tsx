@@ -26,13 +26,13 @@ function VerificationCodeContent() {
   // Denna genererar och skickar en helt ny verifieringskod till användarens mail
   const handleResend = async () => {
     // NOLLSTÄLLER TIMERN
-    setTimeLeft(120);
     setIsExpired(false);
+    setTimeLeft(120);
     setCode("");
 
     try {
       // ANROPAR BACKEND OCH GENERERAR NY KOD
-      await fetch("https://webapp-backend-verificationCode.azurewebsites.net/api/verificationcode/resend", {
+      await fetch("https://webapp-backend-verificationcode-eze6c8c6c7dqd0fr.polandcentral-01.azurewebsites.net/api/verificationcode/resend", {
         method: "POST",
         headers: {
       "Content-Type": "application/json", //förklarar om det är en jsonfil, text, bild etc. Vilken typ av format det som skickas är. 
@@ -88,7 +88,7 @@ function VerificationCodeContent() {
  // MIN BACKEND > BACKENDVERIFICATIONCODE 
   const handleVerify = async () => {
     if (isExpired) return;
-    const response = await fetch("https://webapp-backend-verificationCode.azurewebsites.net/api/verificationcode/verify", {
+    const response = await fetch("https://webapp-backend-verificationcode-eze6c8c6c7dqd0fr.polandcentral-01.azurewebsites.net/api/verificationcode/verify", {
       method: "POST",
       headers: {
       "Content-Type": "application/json", //förklarar om det är en jsonfil, text, bild etc. Vilken typ av format det som skickas är. 

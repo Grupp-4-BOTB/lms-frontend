@@ -94,37 +94,37 @@ export default function RegisterForm() {
         // Användaren har sparats framgångsrikt i din Identity-databas i Azure
         console.log("Användaren skapad i Identity-databasen.");
 
-        try {
-          // 1. ANROP TILL KOLLEGANS VERIFIKATIONSTJÄNST (Microservice)
-          // Vi skickar ett dolt POST-anrop till kollegans Azure-API för att generera och skicka 7-siffrig kod via e-post
-          const resCode = await fetch(
-            "https://webapp-backend-verificationCode.azurewebsites.net/api/verificationcode/resend",
-            {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/json",
-                // Säkerhetsnyckel (API-Key) för att auktorisera anropet mellan våra mikrotjänster
-                "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string,
-              },
-              // Vi skickar med e-postadressen i body så att hennes API vet var koden ska skickas
-              body: JSON.stringify({ Email: email }),
-            },
-          );
+        //       try {
+        //        // 1. ANROP TILL KOLLEGANS VERIFIKATIONSTJÄNST (Microservice)
+        //       // Vi skickar ett dolt POST-anrop till kollegans Azure-API för att generera och skicka 7-siffrig kod via e-post
+        //       const resCode = await fetch(
+        //        "https://webapp-backend-verificationCode.azurewebsites.net/api/verificationcode/resend",
+        //        {
+        //          method: "POST",
+        //           headers: {
+        //            "Content-Type": "application/json",
+        // Säkerhetsnyckel (API-Key) för att auktorisera anropet mellan våra mikrotjänster
+        //            "X-API-KEY": process.env.NEXT_PUBLIC_API_KEY as string,
+        //          },
+        //          // Vi skickar med e-postadressen i body så att hennes API vet var koden ska skickas
+        //           body: JSON.stringify({ Email: email }),
+        //         },
+        //      );
 
-          if (resCode.ok) {
-            alert(
-              "Konto skapat! En 7-siffrig verifieringskod har skickats till din e-post.",
-            );
-          } else {
-            // Om din registrering fungerade men hennes e-posttjänst misslyckades
-            console.warn(
-              "Användaren skapades, men den automatiska sändningen av koden misslyckades.",
-            );
-          }
-        } catch (codeError) {
-          // Fångar upp nätverksfel specifikt mot verifikationstjänsten
-          console.error("Kunde inte nå verifikationstjänstens API:", codeError);
-        }
+        //      if (resCode.ok) {
+        //         alert(
+        //          "Konto skapat! En 7-siffrig verifieringskod har skickats till din e-post.",
+        //       );
+        //      } else {
+        //        // Om din registrering fungerade men hennes e-posttjänst misslyckades
+        //         console.warn(
+        //         "Användaren skapades, men den automatiska sändningen av koden misslyckades.",
+        //       );
+        //       }
+        //      } catch (codeError) {
+        // Fångar upp nätverksfel specifikt mot verifikationstjänsten
+        //       console.error("Kunde inte nå verifikationstjänstens API:", codeError);
+        //      }
 
         // 2. NAVIGERING OCH PARAMETERÖVERFÖRING
         // Vi skickar användaren vidare till verifieringssidan (Figma: Verification Needed).
