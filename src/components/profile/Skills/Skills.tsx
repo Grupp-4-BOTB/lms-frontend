@@ -24,7 +24,7 @@ export default function Skills({ ownerId, isOwner }: SkillsProps) {
     const [showCatalog, setShowCatalog] = useState(false);
     const [customSkill, setCustomSkill] = useState("");
     const SKILL_SERVICE_URL = "https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net";
-    const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
+    const API_KEY = "Test123!";
 
     useEffect(() =>{
         async function fetchData() {
