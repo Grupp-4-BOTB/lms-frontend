@@ -14,7 +14,12 @@ export default function ProfilePage() {
     useEffect(() => {
         async function fetchProfile() {
             const response = await fetch (
-                `https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net/api/profiles/test-user`
+                `https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net/api/profiles/test-user`,
+                {
+                    headers: {
+                        "X-API-Key": process.env.NEXT_PUBLIC_API_KEY!
+                    }
+                }
             );
             if (response.ok) {
                 const data = await response.json();
@@ -40,7 +45,6 @@ export default function ProfilePage() {
                 
                 <ProfileBio 
                     photoUrl={photoUrl} 
-                    onPhotoChange={setPhotoUrl}
                     firstName={firstName}
                     lastName={lastName}
                     description={description} 

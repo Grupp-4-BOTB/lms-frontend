@@ -23,12 +23,22 @@ export default function Skills({ ownerId, isOwner }: SkillsProps) {
     const [userSkills, setUserSkills] = useState<UserSkill[]>([]);
     const [showCatalog, setShowCatalog] = useState(false);
     const [customSkill, setCustomSkill] = useState("");
+    const SKILL_SERVICE_URL = "https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net";
+    const API_KEY = process.env.NEXT_PUBLIC_API_KEY!;
 
     useEffect(() =>{
         async function fetchData() {
             const [catalogRes, userSkillsRes] = await Promise.all([
-                fetch(`https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net/api/skills/catalog`),
-                fetch(`https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net/api/skills/${ownerId}`)
+                fetch(`${SKILL_SERVICE_URL}/api/skills/catalog`, {
+                    headers: {
+                        "X-API-Key": API_KEY
+                    }
+                }),
+                fetch(`${SKILL_SERVICE_URL}/api/skills/${ownerId}`, {
+                    headers: {
+                        "X-API-Key": API_KEY
+                    }
+                })
             ]);
             setCatalog(await catalogRes.json());
             setUserSkills(await userSkillsRes.json());
@@ -37,20 +47,30 @@ export default function Skills({ ownerId, isOwner }: SkillsProps) {
     }, [ownerId]);
 
     async function handleAddSkill(skillCatalogId: string) {
-        const response = await fetch(`https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net/api/skills`, {
+        const response = await fetch(`${SKILL_SERVICE_URL}/api/skills`, {
             method: "POST",
-            headers:{"Content-Type": "application/json"},
+            headers: {
+                "X-API-Key": API_KEY,
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({ skillCatalogId, ownerId })
         });
         if (response.ok) {
-            const userSkillsRes = await fetch(`https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net/api/skills/${ownerId}`);
+            const userSkillsRes = await fetch(`${SKILL_SERVICE_URL}/api/skills/${ownerId}`, {
+                headers: {
+                    "X-API-Key": API_KEY
+                }
+            });
             setUserSkills(await userSkillsRes.json());
         }
     }
 
     async function handleDeleteSkill(id: string) {
-        await fetch(`https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net/api/skills/${id}`, {
-            method: "DELETE"
+        await fetch(`${SKILL_SERVICE_URL}/api/skills/${id}`, {
+            method: "DELETE",
+            headers: {
+                "X-API-Key": API_KEY
+            }
         });
         setUserSkills(prev => prev.filter(s => s.id !== id));
     }
@@ -58,13 +78,20 @@ export default function Skills({ ownerId, isOwner }: SkillsProps) {
     async function handleAddCustomSkill() {
         if (!customSkill.trim()) return;
 
-        const response = await fetch(`https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net/api/skills/customSkill`, {
+        const response = await fetch(`${SKILL_SERVICE_URL}/api/skills/customSkill`, {
             method: "POST",
-            headers: {"Content-Type": "application/json"},
+            headers: {
+                "X-API-Key": API_KEY,
+                "Content-Type": "application/json"
+            },
             body: JSON.stringify({ ownerId, skillName: customSkill.trim() })
         });
         if (response.ok) {
-            const userSkillsRes = await fetch(`https://webapp-skillservice-emil-e4h0bubfendxfxgn.germanywestcentral-01.azurewebsites.net/api/skills/${ownerId}`);
+            const userSkillsRes = await fetch(`${SKILL_SERVICE_URL}/api/skills/${ownerId}`, {
+                headers: {
+                    "X-API-Key": API_KEY
+                }
+            });
             setUserSkills(await userSkillsRes.json());
         }
     }

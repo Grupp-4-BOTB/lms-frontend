@@ -5,19 +5,17 @@ import Skills from "./Skills/Skills";
 
 interface ProfileBioProps {
     photoUrl: string | null;
-    onPhotoChange: (url: string) => void;
     firstName: string;
     lastName: string;
     description: string;
 }
 
-export default function ProfileBio({ photoUrl, onPhotoChange, firstName, lastName, description }: ProfileBioProps) {
+export default function ProfileBio({ photoUrl, firstName, lastName, description }: ProfileBioProps) {
 
     return (
         <div className="flex flex-col gap-4 p-3 m-3 bg-white rounded-3xl w-[400px] justify-start">
             <ProfileCard 
             photoUrl={photoUrl} 
-            onPhotoChange={onPhotoChange}
             firstName={firstName}
             lastName={lastName}
             />
