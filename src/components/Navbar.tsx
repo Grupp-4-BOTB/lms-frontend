@@ -79,13 +79,13 @@ export default function Navbar() {
               Calendar
             </Link> */}
 
-            {/* <Link
-              href="/dashboard"
+            <Link
+              href="/liveclass"
               className="flex items-center gap-3 p-2 rounded-l-full transition-all hover:bg-orange-50 hover:text-orange-600 group"
             >
               <Image src="/liveclass-icon.svg" alt="" width={30} height={30} />
               Live Classes
-            </Link> */}
+            </Link>
 
             <div className="text-[#AAA] py-2"> General </div>
 
