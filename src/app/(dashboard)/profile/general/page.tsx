@@ -10,7 +10,7 @@ export default function ProfilePage() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [description, setDescription] = useState("");
-    const API_KEY = "Test123!";
+    const API_KEY = "Test123!"; //I en vanlig app skulle denna inte vara hårdkodad utan hämtas på ett säkert sätt, t.ex. från en miljövariabel(.env)
     const PROFILE_SERVICE_URL = "https://webapp-userprofileservice-emil-hdgxb8chhfejg8ae.germanywestcentral-01.azurewebsites.net";
 
     useEffect(() => {
